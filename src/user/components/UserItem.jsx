@@ -7,7 +7,7 @@ import "./UserItem.css";
 
 const UserItem = ({ user }) => {
   const { id, image, name, places: placeCount } = user;
-  console.log(placeCount);
+
   return (
     <li className="user-item">
       <Card className="user-item__content">
