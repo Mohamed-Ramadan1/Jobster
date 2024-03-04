@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+//User Pages
+import { Users } from "./user/pages";
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <h1>You in the base router</h1>,
+      element: <Users />,
     },
   ]);
   return <RouterProvider router={router} />;
