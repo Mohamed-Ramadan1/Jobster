@@ -1,673 +1,38 @@
-#### Complete App
-
-[Jobify](https://jobify.live/)
-
-#### Create React APP
-
-[VITE](https://vitejs.dev/guide/)
-
-```sh
-npm create vite@latest projectName -- --template react
-```
-
-#### Vite - Folder and File Structure
-
-```sh
-npm i
-```
-
-```sh
-npm run dev
-```
-
-- APP running on http://localhost:5173/
-- .jsx extension
-
-#### Remove Boilerplate
-
-- remove App.css
-- remove all code in index.css
-
-  App.jsx
-
-```jsx
-const App = () => {
-  return <h1>Jobify App</h1>;
-};
-export default App;
-```
-
-#### Project Assets
-
-- get assets folder from complete project
-- copy index.css
-- copy/move README.md (steps)
-  - work independently
-  - reference
-  - troubleshoot
-  - copy
-
-#### Global Styles
-
-- saves times on the setup
-- less lines of css
-- speeds up the development
-
-- if any questions about specific styles
-- Coding Addict - [Default Starter Video](https://youtu.be/UDdyGNlQK5w)
-- Repo - [Default Starter Repo](https://github.com/john-smilga/default-starter)
-
-#### Title and Favicon
-
-- add favicon.ico in public
-- change title and favicon in index.html
-
-```html
-<head>
-  <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-  <title>Jobify</title>
-</head>
-```
-
-- resource [Generate Favicons](https://favicon.io/)
-
-#### Install Packages (Optional)
-
-- yes, specific package versions
-- specific commands will be provided later
-- won't need to stop/start server
-
-```sh
-npm install @tanstack/react-query@4.29.5 @tanstack/react-query-devtools@4.29.6 axios@1.3.6 dayjs@1.11.7 react-icons@4.8.0 react-router-dom@6.10.0 react-toastify@9.1.2 recharts@2.5.0 styled-components@5.3.10
-
-```
-
-#### Router
-
-[React Router](https://reactrouter.com/en/main)
-
-- version 6.4 brought significant changes (loader and action)
-- pages as independent entities
-- less need for global state
-- more pages
-
-#### Setup Router
-
-- all my examples will include version !!!
-
-```sh
-npm i react-router-dom@6.10.0
-```
-
-App.jsx
-
-```jsx
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <h1>home</h1>,
-  },
-  {
-    path: '/about',
-    element: (
-      <div>
-        <h2>about page</h2>
-      </div>
-    ),
-  },
-]);
-
-const App = () => {
-  return <RouterProvider router={router} />;
-};
-export default App;
-```
-
-#### Create Pages
-
-- create src/pages directory
-- setup index.js and following pages :
-
-  AddJob.jsx
-  Admin.jsx
-  AllJobs.jsx
-  DashboardLayout.jsx
-  DeleteJob.jsx
-  EditJob.jsx
-  Error.jsx
-  HomeLayout.jsx
-  Landing.jsx
-  Login.jsx
-  Profile.jsx
-  Register.jsx
-  Stats.jsx
-
-```jsx
-const AddJob = () => {
-  return <h1>AddJob</h1>;
-};
-export default AddJob;
-```
-
-#### Index
-
-App.jsx
-
-```jsx
-import HomeLayout from '../ pages/HomeLayout';
-```
-
-pages/index.js
-
-```js
-export { default as DashboardLayout } from './DashboardLayout';
-export { default as Landing } from './Landing';
-export { default as HomeLayout } from './HomeLayout';
-export { default as Register } from './Register';
-export { default as Login } from './Login';
-export { default as Error } from './Error';
-export { default as Stats } from './Stats';
-export { default as AllJobs } from './AllJobs';
-export { default as AddJob } from './AddJob';
-export { default as EditJob } from './EditJob';
-export { default as Profile } from './Profile';
-export { default as Admin } from './Admin';
-```
-
-App.jsx
-
-```jsx
-import {
-  HomeLayout,
-  Landing,
-  Register,
-  Login,
-  DashboardLayout,
-  Error,
-} from './pages';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomeLayout />,
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/dashboard',
-    element: <DashboardLayout />,
-  },
-]);
-```
-
-#### Link Component
-
-- navigate around project
-- client side routing
-
-Register.jsx
-
-```jsx
-import { Link } from 'react-router-dom';
-
-const Register = () => {
-  return (
-    <div>
-      <h1>Register</h1>
-      <Link to='/login'>Login Page</Link>
-    </div>
-  );
-};
-export default Register;
-```
-
-Login.jsx
-
-```jsx
-import { Link } from 'react-router-dom';
-
-const Login = () => {
-  return (
-    <div>
-      <h1>Login</h1>
-      <Link to='/register'>Register Page</Link>
-    </div>
-  );
-};
-export default Login;
-```
-
-#### Nested Routes
-
-- what about Navbar?
-- decide on root (parent route)
-- make path relative
-- for time being only home layout will be visible
-
-App.jsx
-
-```jsx
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomeLayout />,
-    children: [
-      {
-        path: 'register',
-        element: <Register />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'dashboard',
-        element: <DashboardLayout />,
-      },
-    ],
-  },
-]);
-```
-
-HomeLayout.jsx
-
-```jsx
-import { Outlet } from 'react-router-dom';
-
-const HomeLayout = () => {
-  return (
-    <>
-      {/* add things like Navbar */}
-      {/* <h1>home layout</h1> */}
-      <Outlet />
-    </>
-  );
-};
-export default HomeLayout;
-```
-
-#### Index (Home) Page
-
-App.jsx
-
-```jsx
-{
-    path: '/',
-    element: <HomeLayout />,
-    children: [
-      {
-        index: true,
-        element: <Landing />,
-      },
-...
-      ]
-}
-```
-
-#### Error Page
-
-- bubbles up
-
-App.jsx
-
-```jsx
-{
-    path: '/',
-    element: <HomeLayout />,
-    errorElement: <Error />,
-    ...
-}
-```
-
-Error.jsx
-
-```jsx
-import { Link, useRouteError } from 'react-router-dom';
-
-const Error = () => {
-  const error = useRouteError();
-  console.log(error);
-  return (
-    <div>
-      <h1>Error Page !!!</h1>
-      <Link to='/dashboard'>back home</Link>
-    </div>
-  );
-};
-export default Error;
-```
-
-#### Styled Components
-
-- CSS in JS
-- Styled Components
-- have logic and styles in component
-- no name collisions
-- apply javascript logic
-- [Styled Components Docs](https://styled-components.com/)
-- [Styled Components Course](https://www.udemy.com/course/styled-components-tutorial-and-project-course/?referralCode=9DABB172FCB2625B663F)
-
-```sh
-npm install styled-components@5.3.10
-```
-
-```js
-import styled from 'styled-components';
-
-const El = styled.el`
-  // styles go here
-`;
-```
-
-- no name collisions, since unique class
-- vscode-styled-components extension
-- colors and bugs
-
-Landing.jsx
-
-```jsx
-import styled from 'styled-components';
-
-const Landing = () => {
-  return (
-    <div>
-      <h1>Landing</h1>
-      <StyledButton>Click Me</StyledButton>
-    </div>
-  );
-};
-
-const StyledButton = styled.button`
-  background-color: red;
-  color: white;
-`;
-export default Landing;
-```
-
-#### Style Entire React Component
-
-```js
-const Wrapper = styled.el``;
-
-const Component = () => {
-  return (
-    <Wrapper>
-      <h1> Component</h1>
-    </Wrapper>
-  );
-};
-```
-
-- only responsible for styling
-- wrappers folder in assets
-
-Landing.jsx
-
-```jsx
-import styled from 'styled-components';
-
-const Landing = () => {
-  return (
-    <Wrapper>
-      <h1>Landing</h1>
-      <div className='content'>some content</div>
-    </Wrapper>
-  );
-};
-
-const Wrapper = styled.div`
-  background-color: red;
-  h1 {
-    color: white;
-  }
-  .content {
-    background-color: blue;
-    color: yellow;
-  }
-`;
-export default Landing;
-```
-
-#### Landing Page
-
-```jsx
-import main from '../assets/images/main.svg';
-import { Link } from 'react-router-dom';
-import logo from '../assets/images/logo.svg';
-import styled from 'styled-components';
-const Landing = () => {
-  return (
-    <StyledWrapper>
-      <nav>
-        <img src={logo} alt='jobify' className='logo' />
-      </nav>
-      <div className='container page'>
-        {/* info */}
-        <div className='info'>
-          <h1>
-            job <span>tracking</span> app
-          </h1>
-          <p>
-            I'm baby wayfarers hoodie next level taiyaki brooklyn cliche blue
-            bottle single-origin coffee chia. Aesthetic post-ironic venmo,
-            quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
-            narwhal.
-          </p>
-          <Link to='/register' className='btn register-link'>
-            Register
-          </Link>
-          <Link to='/login' className='btn'>
-            Login / Demo User
-          </Link>
-        </div>
-        <img src={main} alt='job hunt' className='img main-img' />
-      </div>
-    </StyledWrapper>
-  );
-};
-
-const StyledWrapper = styled.section`
-  nav {
-    width: var(--fluid-width);
-    max-width: var(--max-width);
-    margin: 0 auto;
-    height: var(--nav-height);
-    display: flex;
-    align-items: center;
-  }
-  .page {
-    min-height: calc(100vh - var(--nav-height));
-    display: grid;
-    align-items: center;
-    margin-top: -3rem;
-  }
-  h1 {
-    font-weight: 700;
-    span {
-      color: var(--primary-500);
-    }
-    margin-bottom: 1.5rem;
-  }
-  p {
-    line-height: 2;
-    color: var(--text-secondary-color);
-    margin-bottom: 1.5rem;
-    max-width: 35em;
-  }
-  .register-link {
-    margin-right: 1rem;
-  }
-  .main-img {
-    display: none;
-  }
-  .btn {
-    padding: 0.75rem 1rem;
-  }
-  @media (min-width: 992px) {
-    .page {
-      grid-template-columns: 1fr 400px;
-      column-gap: 3rem;
-    }
-    .main-img {
-      display: block;
-    }
-  }
-`;
-
-export default Landing;
-```
-
-#### Assets/Wrappers
-
-- css optional
-
-  Landing.jsx
-
-```jsx
-import Wrapper from '../assets/wrappers/LandingPage';
-```
-
-#### Logo Component
-
-- create src/components/Logo.jsx
-- import logo and setup component
-- in components setup index.js import/export (just like pages)
-- replace in Landing
-
-  Logo.jsx
-
-```jsx
-import logo from '../assets/images/logo.svg';
-
-const Logo = () => {
-  return <img src={logo} alt='jobify' className='logo' />;
-};
-
-export default Logo;
-```
-
-#### Logo and Images
-
-- logo built in Figma
-- [Cool Images](https://undraw.co/)
-
-#### Error Page
-
-Error.jsx
-
-```jsx
-import { Link, useRouteError } from 'react-router-dom';
-import img from '../assets/images/not-found.svg';
-import Wrapper from '../assets/wrappers/ErrorPage';
-
-const Error = () => {
-  const error = useRouteError();
-  console.log(error);
-  if (error.status === 404) {
-    return (
-      <Wrapper>
-        <div>
-          <img src={img} alt='not found' />
-          <h3>Ohh! page not found</h3>
-          <p>We can't seem to find the page you're looking for</p>
-          <Link to='/dashboard'>back home</Link>
-        </div>
-      </Wrapper>
-    );
-  }
-  return (
-    <Wrapper>
-      <div>
-        <h3>something went wrong</h3>
-      </div>
-    </Wrapper>
-  );
-};
-
-export default Error;
-```
-
-#### Error Page CSS (optional)
-
-assets/wrappers/Error.js
-
-```js
-import styled from 'styled-components';
-
-const Wrapper = styled.main`
-  min-height: 100vh;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 90vw;
-    max-width: 600px;
-    display: block;
-    margin-bottom: 2rem;
-    margin-top: -3rem;
-  }
-  h3 {
-    margin-bottom: 0.5rem;
-  }
-  p {
-    line-height: 1.5;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    color: var(--text-secondary-color);
-  }
-  a {
-    color: var(--primary-500);
-    text-transform: capitalize;
-  }
-`;
-
-export default Wrapper;
-```
-
 #### Register Page
 
 Register.jsx
 
 ```jsx
-import { Logo } from '../components';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
-import { Link } from 'react-router-dom';
+import { Logo } from "../components";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
     <Wrapper>
-      <form className='form'>
+      <form className="form">
         <Logo />
         <h4>Register</h4>
-        <div className='form-row'>
-          <label htmlFor='name' className='form-label'>
+        <div className="form-row">
+          <label htmlFor="name" className="form-label">
             name
           </label>
           <input
-            type='text'
-            id='name'
-            name='name'
-            className='form-input'
-            defaultValue='john'
+            type="text"
+            id="name"
+            name="name"
+            className="form-input"
+            defaultValue="john"
             required
           />
         </div>
 
-        <button type='submit' className='btn btn-block'>
+        <button type="submit" className="btn btn-block">
           submit
         </button>
         <p>
           Already a member?
-          <Link to='/login' className='member-btn'>
+          <Link to="/login" className="member-btn">
             Login
           </Link>
         </p>
@@ -693,17 +58,17 @@ In React, the defaultValue prop is used to set the initial or default value of a
 FormRow.jsx
 
 ```jsx
-const FormRow = ({ type, name, labelText, defaultValue = '' }) => {
+const FormRow = ({ type, name, labelText, defaultValue = "" }) => {
   return (
-    <div className='form-row'>
-      <label htmlFor={name} className='form-label'>
+    <div className="form-row">
+      <label htmlFor={name} className="form-label">
         {labelText || name}
       </label>
       <input
         type={type}
         id={name}
         name={name}
-        className='form-input'
+        className="form-input"
         defaultValue={defaultValue}
         required
       />
@@ -717,29 +82,29 @@ export default FormRow;
 Register.jsx
 
 ```jsx
-import { Logo, FormRow } from '../components';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
-import { Link } from 'react-router-dom';
+import { Logo, FormRow } from "../components";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
     <Wrapper>
-      <form className='form'>
+      <form className="form">
         <Logo />
         <h4>Register</h4>
-        <FormRow type='text' name='name' />
-        <FormRow type='text' name='lastName' labelText='last name' />
-        <FormRow type='text' name='location' />
-        <FormRow type='email' name='email' />
+        <FormRow type="text" name="name" />
+        <FormRow type="text" name="lastName" labelText="last name" />
+        <FormRow type="text" name="location" />
+        <FormRow type="email" name="email" />
 
-        <FormRow type='password' name='password' />
+        <FormRow type="password" name="password" />
 
-        <button type='submit' className='btn btn-block'>
+        <button type="submit" className="btn btn-block">
           submit
         </button>
         <p>
           Already a member?
-          <Link to='/login' className='member-btn'>
+          <Link to="/login" className="member-btn">
             Login
           </Link>
         </p>
@@ -755,28 +120,28 @@ export default Register;
 Login Page
 
 ```jsx
-import { Logo, FormRow } from '../components';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
+import { Logo, FormRow } from "../components";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <Wrapper>
-      <form className='form'>
+      <form className="form">
         <Logo />
         <h4>Login</h4>
-        <FormRow type='email' name='email' defaultValue='john@gmail.com' />
-        <FormRow type='password' name='password' defaultValue='secret123' />
-        <button type='submit' className='btn btn-block'>
+        <FormRow type="email" name="email" defaultValue="john@gmail.com" />
+        <FormRow type="password" name="password" defaultValue="secret123" />
+        <button type="submit" className="btn btn-block">
           submit
         </button>
-        <button type='button' className='btn btn-block'>
+        <button type="button" className="btn btn-block">
           explore the app
         </button>
         <p>
           Not a member yet?
-          <Link to='/register' className='member-btn'>
+          <Link to="/register" className="member-btn">
             Register
           </Link>
         </p>
@@ -792,7 +157,7 @@ export default Login;
 assets/wrappers/RegisterAndLoginPage.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   min-height: 100vh;
@@ -863,7 +228,7 @@ App.jsx
 Dashboard.jsx
 
 ```jsx
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
@@ -885,20 +250,20 @@ export default DashboardLayout;
 DashboardLayout.jsx
 
 ```jsx
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
-import Wrapper from '../assets/wrappers/Dashboard';
-import { Navbar, BigSidebar, SmallSidebar } from '../components';
+import Wrapper from "../assets/wrappers/Dashboard";
+import { Navbar, BigSidebar, SmallSidebar } from "../components";
 
 const Dashboard = () => {
   return (
     <Wrapper>
-      <main className='dashboard'>
+      <main className="dashboard">
         <SmallSidebar />
         <BigSidebar />
         <div>
           <Navbar />
-          <div className='dashboard-page'>
+          <div className="dashboard-page">
             <Outlet />
           </div>
         </div>
@@ -915,7 +280,7 @@ export default Dashboard;
 assets/wrappers/DashboardLayout.jsx
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   .dashboard {
@@ -942,22 +307,22 @@ export default Wrapper;
 #### Dashboard Context
 
 ```jsx
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
-import Wrapper from '../assets/wrappers/Dashboard';
-import { Navbar, BigSidebar, SmallSidebar } from '../components';
+import Wrapper from "../assets/wrappers/Dashboard";
+import { Navbar, BigSidebar, SmallSidebar } from "../components";
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext } from "react";
 const DashboardContext = createContext();
 const Dashboard = () => {
   // temp
-  const user = { name: 'john' };
+  const user = { name: "john" };
 
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const toggleDarkTheme = () => {
-    console.log('toggle dark theme');
+    console.log("toggle dark theme");
   };
 
   const toggleSidebar = () => {
@@ -965,7 +330,7 @@ const Dashboard = () => {
   };
 
   const logoutUser = async () => {
-    console.log('logout user');
+    console.log("logout user");
   };
   return (
     <DashboardContext.Provider
@@ -979,12 +344,12 @@ const Dashboard = () => {
       }}
     >
       <Wrapper>
-        <main className='dashboard'>
+        <main className="dashboard">
           <SmallSidebar />
           <BigSidebar />
           <div>
             <Navbar />
-            <div className='dashboard-page'>
+            <div className="dashboard-page">
               <Outlet />
             </div>
           </div>
@@ -1026,24 +391,24 @@ const Navbar = () => {
 #### Navbar - Initial Setup
 
 ```jsx
-import Wrapper from '../assets/wrappers/Navbar';
-import { FaAlignLeft } from 'react-icons/fa';
-import Logo from './Logo';
+import Wrapper from "../assets/wrappers/Navbar";
+import { FaAlignLeft } from "react-icons/fa";
+import Logo from "./Logo";
 
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { useDashboardContext } from "../pages/DashboardLayout";
 const Navbar = () => {
   const { toggleSidebar } = useDashboardContext();
   return (
     <Wrapper>
-      <div className='nav-center'>
-        <button type='button' className='toggle-btn' onClick={toggleSidebar}>
+      <div className="nav-center">
+        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
           <FaAlignLeft />
         </button>
         <div>
           <Logo />
-          <h4 className='logo-text'>dashboard</h4>
+          <h4 className="logo-text">dashboard</h4>
         </div>
-        <div className='btn-container'>toggle/logout</div>
+        <div className="btn-container">toggle/logout</div>
       </div>
     </Wrapper>
   );
@@ -1057,7 +422,7 @@ export default Navbar;
 assets/wrappers/Navbar.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -1117,20 +482,20 @@ export default Wrapper;
 - create src/utils/links.jsx
 
 ```jsx
-import React from 'react';
+import React from "react";
 
-import { IoBarChartSharp } from 'react-icons/io5';
-import { MdQueryStats } from 'react-icons/md';
-import { FaWpforms } from 'react-icons/fa';
-import { ImProfile } from 'react-icons/im';
-import { MdAdminPanelSettings } from 'react-icons/md';
+import { IoBarChartSharp } from "react-icons/io5";
+import { MdQueryStats } from "react-icons/md";
+import { FaWpforms } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 const links = [
-  { text: 'add job', path: '.', icon: <FaWpforms /> },
-  { text: 'all jobs', path: 'all-jobs', icon: <MdQueryStats /> },
-  { text: 'stats', path: 'stats', icon: <IoBarChartSharp /> },
-  { text: 'profile', path: 'profile', icon: <ImProfile /> },
-  { text: 'admin', path: 'admin', icon: <MdAdminPanelSettings /> },
+  { text: "add job", path: ".", icon: <FaWpforms /> },
+  { text: "all jobs", path: "all-jobs", icon: <MdQueryStats /> },
+  { text: "stats", path: "stats", icon: <IoBarChartSharp /> },
+  { text: "profile", path: "profile", icon: <ImProfile /> },
+  { text: "admin", path: "admin", icon: <MdAdminPanelSettings /> },
 ];
 
 export default links;
@@ -1143,13 +508,13 @@ export default links;
 SmallSidebar
 
 ```jsx
-import Wrapper from '../assets/wrappers/SmallSidebar';
-import { FaTimes } from 'react-icons/fa';
+import Wrapper from "../assets/wrappers/SmallSidebar";
+import { FaTimes } from "react-icons/fa";
 
-import Logo from './Logo';
-import { NavLink } from 'react-router-dom';
-import links from '../utils/links';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import Logo from "./Logo";
+import { NavLink } from "react-router-dom";
+import links from "../utils/links";
+import { useDashboardContext } from "../pages/DashboardLayout";
 
 const SmallSidebar = () => {
   const { showSidebar, toggleSidebar } = useDashboardContext();
@@ -1157,17 +522,17 @@ const SmallSidebar = () => {
     <Wrapper>
       <div
         className={
-          showSidebar ? 'sidebar-container show-sidebar' : 'sidebar-container'
+          showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"
         }
       >
-        <div className='content'>
-          <button type='button' className='close-btn' onClick={toggleSidebar}>
+        <div className="content">
+          <button type="button" className="close-btn" onClick={toggleSidebar}>
             <FaTimes />
           </button>
           <header>
             <Logo />
           </header>
-          <div className='nav-links'>
+          <div className="nav-links">
             {links.map((link) => {
               const { text, path, icon } = link;
 
@@ -1175,12 +540,12 @@ const SmallSidebar = () => {
                 <NavLink
                   to={path}
                   key={text}
-                  className='nav-link'
+                  className="nav-link"
                   onClick={toggleSidebar}
                   // will discuss in a second
                   end
                 >
-                  <span className='icon'>{icon}</span>
+                  <span className="icon">{icon}</span>
                   {text}
                 </NavLink>
               );
@@ -1202,7 +567,7 @@ export default SmallSidebar;
 assets/wrappers/SmallSidebar.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.aside`
   @media (min-width: 992px) {
@@ -1281,15 +646,15 @@ export default Wrapper;
 - components/NavLinks.jsx
 
 ```jsx
-import { useDashboardContext } from '../pages/DashboardLayout';
-import links from '../utils/links';
-import { NavLink } from 'react-router-dom';
+import { useDashboardContext } from "../pages/DashboardLayout";
+import links from "../utils/links";
+import { NavLink } from "react-router-dom";
 
 const NavLinks = () => {
   const { user, toggleSidebar } = useDashboardContext();
 
   return (
-    <div className='nav-links'>
+    <div className="nav-links">
       {links.map((link) => {
         const { text, path, icon } = link;
         // admin user
@@ -1298,10 +663,10 @@ const NavLinks = () => {
             to={path}
             key={text}
             onClick={toggleSidebar}
-            className='nav-link'
+            className="nav-link"
             end
           >
-            <span className='icon'>{icon}</span>
+            <span className="icon">{icon}</span>
             {text}
           </NavLink>
         );
@@ -1316,10 +681,10 @@ export default NavLinks;
 #### Big Sidebar
 
 ```jsx
-import NavLinks from './NavLinks';
-import Logo from '../components/Logo';
-import Wrapper from '../assets/wrappers/BigSidebar';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import NavLinks from "./NavLinks";
+import Logo from "../components/Logo";
+import Wrapper from "../assets/wrappers/BigSidebar";
+import { useDashboardContext } from "../pages/DashboardLayout";
 
 const BigSidebar = () => {
   const { showSidebar } = useDashboardContext();
@@ -1327,10 +692,10 @@ const BigSidebar = () => {
     <Wrapper>
       <div
         className={
-          showSidebar ? 'sidebar-container ' : 'sidebar-container show-sidebar'
+          showSidebar ? "sidebar-container " : "sidebar-container show-sidebar"
         }
       >
-        <div className='content'>
+        <div className="content">
           <header>
             <Logo />
           </header>
@@ -1349,7 +714,7 @@ const NavLinks = ({ isBigSidebar }) => {
   const { user, toggleSidebar } = useDashboardContext();
 
   return (
-    <div className='nav-links'>
+    <div className="nav-links">
       {links.map((link) => {
         const { text, path, icon } = link;
         // admin user
@@ -1358,10 +723,10 @@ const NavLinks = ({ isBigSidebar }) => {
             to={path}
             key={text}
             onClick={isBigSidebar ? null : toggleSidebar}
-            className='nav-link'
+            className="nav-link"
             end
           >
-            <span className='icon'>{icon}</span>
+            <span className="icon">{icon}</span>
             {text}
           </NavLink>
         );
@@ -1378,7 +743,7 @@ export default NavLinks;
 assets/wrappers/BigSidebar.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.aside`
   display: none;
@@ -1445,10 +810,10 @@ export default Wrapper;
 components/LogoutContainer.jsx
 
 ```jsx
-import { FaUserCircle, FaCaretDown } from 'react-icons/fa';
-import Wrapper from '../assets/wrappers/LogoutContainer';
-import { useState } from 'react';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { FaUserCircle, FaCaretDown } from "react-icons/fa";
+import Wrapper from "../assets/wrappers/LogoutContainer";
+import { useState } from "react";
+import { useDashboardContext } from "../pages/DashboardLayout";
 
 const LogoutContainer = () => {
   const [showLogout, setShowLogout] = useState(false);
@@ -1457,12 +822,12 @@ const LogoutContainer = () => {
   return (
     <Wrapper>
       <button
-        type='button'
-        className='btn logout-btn'
+        type="button"
+        className="btn logout-btn"
         onClick={() => setShowLogout(!showLogout)}
       >
         {user.avatar ? (
-          <img src={user.avatar} alt='avatar' className='img' />
+          <img src={user.avatar} alt="avatar" className="img" />
         ) : (
           <FaUserCircle />
         )}
@@ -1470,8 +835,8 @@ const LogoutContainer = () => {
         {user?.name}
         <FaCaretDown />
       </button>
-      <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-        <button type='button' className='dropdown-btn' onClick={logoutUser}>
+      <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
+        <button type="button" className="dropdown-btn" onClick={logoutUser}>
           logout
         </button>
       </div>
@@ -1486,7 +851,7 @@ export default LogoutContainer;
 assets/wrappers/LogoutContainer.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   position: relative;
@@ -1538,18 +903,18 @@ export default Wrapper;
 components/ThemeToggle.jsx
 
 ```jsx
-import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
-import Wrapper from '../assets/wrappers/ThemeToggle';
-import { useDashboardContext } from '../pages/DashboardLayout';
+import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
+import Wrapper from "../assets/wrappers/ThemeToggle";
+import { useDashboardContext } from "../pages/DashboardLayout";
 
 const ThemeToggle = () => {
   const { isDarkTheme, toggleDarkTheme } = useDashboardContext();
   return (
     <Wrapper onClick={toggleDarkTheme}>
       {isDarkTheme ? (
-        <BsFillSunFill className='toggle-icon' />
+        <BsFillSunFill className="toggle-icon" />
       ) : (
-        <BsFillMoonFill className='toggle-icon' />
+        <BsFillMoonFill className="toggle-icon" />
       )}
     </Wrapper>
   );
@@ -1561,7 +926,7 @@ export default ThemeToggle;
 Navbar.jsx
 
 ```jsx
-<div className='btn-container'>
+<div className="btn-container">
   <ThemeToggle />
 </div>
 ```
@@ -1571,7 +936,7 @@ Navbar.jsx
 assets/wrappers/ThemeToggle.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   background: transparent;
@@ -1598,8 +963,8 @@ DashboardLayout.jsx
 const toggleDarkTheme = () => {
   const newDarkTheme = !isDarkTheme;
   setIsDarkTheme(newDarkTheme);
-  document.body.classList.toggle('dark-theme', newDarkTheme);
-  localStorage.setItem('darkTheme', newDarkTheme);
+  document.body.classList.toggle("dark-theme", newDarkTheme);
+  localStorage.setItem("darkTheme", newDarkTheme);
 };
 ```
 
@@ -1724,7 +1089,7 @@ export const value = 42;
 server.js
 
 ```js
-import { value } from './test.js';
+import { value } from "./test.js";
 console.log(value);
 ```
 
@@ -1780,15 +1145,15 @@ npm i express@4.18.2 nodemon@2.0.22
 server.js
 
 ```js
-import express from 'express';
+import express from "express";
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });
 
 app.listen(5100, () => {
-  console.log('server running....');
+  console.log("server running....");
 });
 ```
 
@@ -1817,10 +1182,10 @@ server
 ```js
 app.use(express.json());
 
-app.post('/', (req, res) => {
+app.post("/", (req, res) => {
   console.log(req);
 
-  res.json({ message: 'Data received', data: req.body });
+  res.json({ message: "Data received", data: req.body });
 });
 ```
 
@@ -1839,9 +1204,9 @@ npm i morgan@1.10.0 dotenv@16.0.3
 ```
 
 ```js
-import morgan from 'morgan';
+import morgan from "morgan";
 
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 ```
 
 - create .env file in the root
@@ -1851,11 +1216,11 @@ app.use(morgan('dev'));
 server.js
 
 ```js
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 const port = process.env.PORT || 5100;
@@ -1873,7 +1238,7 @@ app.listen(port, () => {
 ```js
 try {
   const response = await fetch(
-    'https://www.course-api.com/react-useReducer-cart-project'
+    "https://www.course-api.com/react-useReducer-cart-project"
   );
   const cartData = await response.json();
   console.log(cartData);
@@ -1909,14 +1274,14 @@ npm i nanoid@4.0.2
 server.js
 
 ```js
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 let jobs = [
-  { id: nanoid(), company: 'apple', position: 'front-end' },
-  { id: nanoid(), company: 'google', position: 'back-end' },
+  { id: nanoid(), company: "apple", position: "front-end" },
+  { id: nanoid(), company: "google", position: "back-end" },
 ];
 
-app.get('/api/v1/jobs', (req, res) => {
+app.get("/api/v1/jobs", (req, res) => {
   res.status(200).json({ jobs });
 });
 ```
@@ -1926,10 +1291,10 @@ app.get('/api/v1/jobs', (req, res) => {
 ```js
 // CREATE JOB
 
-app.post('/api/v1/jobs', (req, res) => {
+app.post("/api/v1/jobs", (req, res) => {
   const { company, position } = req.body;
   if (!company || !position) {
-    return res.status(400).json({ msg: 'please provide company and position' });
+    return res.status(400).json({ msg: "please provide company and position" });
   }
   const id = nanoid(10);
   // console.log(id);
@@ -1940,7 +1305,7 @@ app.post('/api/v1/jobs', (req, res) => {
 
 // GET SINGLE JOB
 
-app.get('/api/v1/jobs/:id', (req, res) => {
+app.get("/api/v1/jobs/:id", (req, res) => {
   const { id } = req.params;
   const job = jobs.find((job) => job.id === id);
   if (!job) {
@@ -1951,10 +1316,10 @@ app.get('/api/v1/jobs/:id', (req, res) => {
 
 // EDIT JOB
 
-app.patch('/api/v1/jobs/:id', (req, res) => {
+app.patch("/api/v1/jobs/:id", (req, res) => {
   const { company, position } = req.body;
   if (!company || !position) {
-    return res.status(400).json({ msg: 'please provide company and position' });
+    return res.status(400).json({ msg: "please provide company and position" });
   }
   const { id } = req.params;
   const job = jobs.find((job) => job.id === id);
@@ -1964,12 +1329,12 @@ app.patch('/api/v1/jobs/:id', (req, res) => {
 
   job.company = company;
   job.position = position;
-  res.status(200).json({ msg: 'job modified', job });
+  res.status(200).json({ msg: "job modified", job });
 });
 
 // DELETE JOB
 
-app.delete('/api/v1/jobs/:id', (req, res) => {
+app.delete("/api/v1/jobs/:id", (req, res) => {
   const { id } = req.params;
   const job = jobs.find((job) => job.id === id);
   if (!job) {
@@ -1978,15 +1343,15 @@ app.delete('/api/v1/jobs/:id', (req, res) => {
   const newJobs = jobs.filter((job) => job.id !== id);
   jobs = newJobs;
 
-  res.status(200).json({ msg: 'job deleted' });
+  res.status(200).json({ msg: "job deleted" });
 });
 ```
 
 #### Not Found Middleware
 
 ```js
-app.use('*', (req, res) => {
-  res.status(404).json({ msg: 'not found' });
+app.use("*", (req, res) => {
+  res.status(404).json({ msg: "not found" });
 });
 ```
 
@@ -1995,7 +1360,7 @@ app.use('*', (req, res) => {
 ```js
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).json({ msg: 'something went wrong' });
+  res.status(500).json({ msg: "something went wrong" });
 });
 ```
 
@@ -2011,17 +1376,17 @@ In summary, the "not found" middleware is specifically designed to handle reques
 
 ```js
 // GET ALL JOBS
-app.get('/api/v1/jobs', (req, res) => {
+app.get("/api/v1/jobs", (req, res) => {
   // console.log(jobss);
   res.status(200).json({ jobs });
 });
 
 // GET SINGLE JOB
-app.get('/api/v1/jobs/:id', (req, res) => {
+app.get("/api/v1/jobs/:id", (req, res) => {
   const { id } = req.params;
   const job = jobs.find((job) => job.id === id);
   if (!job) {
-    throw new Error('no job with that id');
+    throw new Error("no job with that id");
     return res.status(404).json({ msg: `no job with id ${id}` });
   }
   res.status(200).json({ job });
@@ -2035,11 +1400,11 @@ setup controllers and router
 controllers/jobController.js
 
 ```js
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 let jobs = [
-  { id: nanoid(), company: 'apple', position: 'front-end developer' },
-  { id: nanoid(), company: 'google', position: 'back-end developer' },
+  { id: nanoid(), company: "apple", position: "front-end developer" },
+  { id: nanoid(), company: "google", position: "back-end developer" },
 ];
 
 export const getAllJobs = async (req, res) => {
@@ -2050,7 +1415,7 @@ export const createJob = async (req, res) => {
   const { company, position } = req.body;
 
   if (!company || !position) {
-    return res.status(400).json({ msg: 'please provide company and position' });
+    return res.status(400).json({ msg: "please provide company and position" });
   }
   const id = nanoid(10);
   const job = { id, company, position };
@@ -2071,7 +1436,7 @@ export const getJob = async (req, res) => {
 export const updateJob = async (req, res) => {
   const { company, position } = req.body;
   if (!company || !position) {
-    return res.status(400).json({ msg: 'please provide company and position' });
+    return res.status(400).json({ msg: "please provide company and position" });
   }
   const { id } = req.params;
   const job = jobs.find((job) => job.id === id);
@@ -2081,7 +1446,7 @@ export const updateJob = async (req, res) => {
 
   job.company = company;
   job.position = position;
-  res.status(200).json({ msg: 'job modified', job });
+  res.status(200).json({ msg: "job modified", job });
 };
 
 export const deleteJob = async (req, res) => {
@@ -2093,14 +1458,14 @@ export const deleteJob = async (req, res) => {
   const newJobs = jobs.filter((job) => job.id !== id);
   jobs = newJobs;
 
-  res.status(200).json({ msg: 'job deleted' });
+  res.status(200).json({ msg: "job deleted" });
 };
 ```
 
 routes/jobRouter.js
 
 ```js
-import { Router } from 'express';
+import { Router } from "express";
 const router = Router();
 
 import {
@@ -2109,13 +1474,13 @@ import {
   createJob,
   updateJob,
   deleteJob,
-} from '../controllers/jobController.js';
+} from "../controllers/jobController.js";
 
 // router.get('/', getAllJobs);
 // router.post('/', createJob);
 
-router.route('/').get(getAllJobs).post(createJob);
-router.route('/:id').get(getJob).patch(updateJob).delete(deleteJob);
+router.route("/").get(getAllJobs).post(createJob);
+router.route("/:id").get(getJob).patch(updateJob).delete(deleteJob);
 
 export default router;
 ```
@@ -2123,8 +1488,8 @@ export default router;
 server.js
 
 ```js
-import jobRouter from './routers/jobRouter.js';
-app.use('/api/v1/jobs', jobRouter);
+import jobRouter from "./routers/jobRouter.js";
+app.use("/api/v1/jobs", jobRouter);
 ```
 
 #### MongoDB
@@ -2148,7 +1513,7 @@ npm i mongoose@7.0.5
 server.js
 
 ```js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
@@ -2168,7 +1533,7 @@ models/JobModel.js
 enum - data type represents a field with a predefined set of values
 
 ```js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const JobSchema = new mongoose.Schema(
   {
@@ -2176,23 +1541,23 @@ const JobSchema = new mongoose.Schema(
     position: String,
     jobStatus: {
       type: String,
-      enum: ['interview', 'declined', 'pending'],
-      default: 'pending',
+      enum: ["interview", "declined", "pending"],
+      default: "pending",
     },
     jobType: {
       type: String,
-      enum: ['full-time', 'part-time', 'internship'],
-      default: 'full-time',
+      enum: ["full-time", "part-time", "internship"],
+      default: "full-time",
     },
     jobLocation: {
       type: String,
-      default: 'my city',
+      default: "my city",
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model('Job', JobSchema);
+export default mongoose.model("Job", JobSchema);
 ```
 
 #### Create Job
@@ -2200,7 +1565,7 @@ export default mongoose.model('Job', JobSchema);
 jobController.js
 
 ```js
-import Job from '../models/JobModel.js';
+import Job from "../models/JobModel.js";
 
 export const createJob = async (req, res) => {
   const { company, position } = req.body;
@@ -2217,10 +1582,10 @@ jobController.js
 export const createJob = async (req, res) => {
   const { company, position } = req.body;
   try {
-    const job = await Job.create('something');
+    const job = await Job.create("something");
     res.status(201).json({ job });
   } catch (error) {
-    res.status(500).json({ msg: 'server error' });
+    res.status(500).json({ msg: "server error" });
   }
 };
 ```
@@ -2240,7 +1605,7 @@ npm i express-async-errors@3.1.1
   server.js
 
 ```js
-import 'express-async-errors';
+import "express-async-errors";
 ```
 
 jobController.js
@@ -2367,11 +1732,11 @@ export const getJob = async (req, res) => {
 errors/customErrors.js
 
 ```js
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from "http-status-codes";
 export class NotFoundError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'NotFoundError';
+    this.name = "NotFoundError";
     this.statusCode = StatusCodes.NOT_FOUND;
   }
 }
@@ -2398,7 +1763,7 @@ By creating a custom error class like NotFoundError, you can provide more specif
 jobController.js
 
 ```js
-import { NotFoundError } from '../customErrors.js';
+import { NotFoundError } from "../customErrors.js";
 
 if (!job) throw new NotFoundError(`no job with id : ${id}`);
 ```
@@ -2406,11 +1771,11 @@ if (!job) throw new NotFoundError(`no job with id : ${id}`);
 middleware/errorHandlerMiddleware.js
 
 ```js
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from "http-status-codes";
 const errorHandlerMiddleware = (err, req, res, next) => {
   console.log(err);
   const statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
-  const msg = err.message || 'Something went wrong, try again later';
+  const msg = err.message || "Something went wrong, try again later";
 
   res.status(statusCode).json({ msg });
 };
@@ -2421,7 +1786,7 @@ export default errorHandlerMiddleware;
 server.js
 
 ```js
-import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 app.use(errorHandlerMiddleware);
 ```
@@ -2439,21 +1804,21 @@ customErrors.js
 export class BadRequestError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'BadRequestError';
+    this.name = "BadRequestError";
     this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }
 export class UnauthenticatedError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'UnauthenticatedError';
+    this.name = "UnauthenticatedError";
     this.statusCode = StatusCodes.UNAUTHORIZED;
   }
 }
 export class UnauthorizedError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'UnauthorizedError';
+    this.name = "UnauthorizedError";
     this.statusCode = StatusCodes.FORBIDDEN;
   }
 }
@@ -2472,7 +1837,7 @@ npm i express-validator@7.0.1
 server.js
 
 ```js
-app.post('/api/v1/test', (req, res) => {
+app.post("/api/v1/test", (req, res) => {
   const { name } = req.body;
   res.json({ msg: `hello ${name}` });
 });
@@ -2481,11 +1846,11 @@ app.post('/api/v1/test', (req, res) => {
 #### Express Validator
 
 ```js
-import { body, validationResult } from 'express-validator';
+import { body, validationResult } from "express-validator";
 
 app.post(
-  '/api/v1/test',
-  [body('name').notEmpty().withMessage('name is required')],
+  "/api/v1/test",
+  [body("name").notEmpty().withMessage("name is required")],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -2506,8 +1871,8 @@ app.post(
 middleware/validationMiddleware.js
 
 ```js
-import { body, validationResult } from 'express-validator';
-import { BadRequestError } from '../errors/customErrors';
+import { body, validationResult } from "express-validator";
+import { BadRequestError } from "../errors/customErrors";
 const withValidationErrors = (validateValues) => {
   return [
     validateValues,
@@ -2523,11 +1888,11 @@ const withValidationErrors = (validateValues) => {
 };
 
 export const validateTest = withValidationErrors([
-  body('name')
+  body("name")
     .notEmpty()
-    .withMessage('name is required')
+    .withMessage("name is required")
     .isLength({ min: 3, max: 50 })
-    .withMessage('name must be between 3 and 50 characters long')
+    .withMessage("name must be between 3 and 50 characters long")
     .trim(),
 ]);
 ```
@@ -2540,30 +1905,30 @@ utils/constants.js
 
 ```js
 export const JOB_STATUS = {
-  PENDING: 'pending',
-  INTERVIEW: 'interview',
-  DECLINED: 'declined',
+  PENDING: "pending",
+  INTERVIEW: "interview",
+  DECLINED: "declined",
 };
 
 export const JOB_TYPE = {
-  FULL_TIME: 'full-time',
-  PART_TIME: 'part-time',
-  INTERNSHIP: 'internship',
+  FULL_TIME: "full-time",
+  PART_TIME: "part-time",
+  INTERNSHIP: "internship",
 };
 
 export const JOB_SORT_BY = {
-  NEWEST_FIRST: 'newest',
-  OLDEST_FIRST: 'oldest',
-  ASCENDING: 'a-z',
-  DESCENDING: 'z-a',
+  NEWEST_FIRST: "newest",
+  OLDEST_FIRST: "oldest",
+  ASCENDING: "a-z",
+  DESCENDING: "z-a",
 };
 ```
 
 models/JobModel.js
 
 ```js
-import mongoose from 'mongoose';
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants';
+import mongoose from "mongoose";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
 const JobSchema = new mongoose.Schema(
   {
     company: String,
@@ -2580,7 +1945,7 @@ const JobSchema = new mongoose.Schema(
     },
     jobLocation: {
       type: String,
-      default: 'my city',
+      default: "my city",
     },
   },
   { timestamps: true }
@@ -2592,25 +1957,25 @@ const JobSchema = new mongoose.Schema(
 validationMiddleware.js
 
 ```js
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
+import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
 
 export const validateJobInput = withValidationErrors([
-  body('company').notEmpty().withMessage('company is required'),
-  body('position').notEmpty().withMessage('position is required'),
-  body('jobLocation').notEmpty().withMessage('job location is required'),
-  body('jobStatus')
+  body("company").notEmpty().withMessage("company is required"),
+  body("position").notEmpty().withMessage("position is required"),
+  body("jobLocation").notEmpty().withMessage("job location is required"),
+  body("jobStatus")
     .isIn(Object.values(JOB_STATUS))
-    .withMessage('invalid status value'),
-  body('jobType').isIn(Object.values(JOB_TYPE)).withMessage('invalid job type'),
+    .withMessage("invalid status value"),
+  body("jobType").isIn(Object.values(JOB_TYPE)).withMessage("invalid job type"),
 ]);
 ```
 
 ```js
-import { validateJobInput } from '../middleware/validationMiddleware.js';
+import { validateJobInput } from "../middleware/validationMiddleware.js";
 
-router.route('/').get(getAllJobs).post(validateJobInput, createJob);
+router.route("/").get(getAllJobs).post(validateJobInput, createJob);
 router
-  .route('/:id')
+  .route("/:id")
   .get(getJob)
   .patch(validateJobInput, updateJob)
   .delete(deleteJob);
@@ -2633,22 +1998,22 @@ router
 validationMiddleware.js
 
 ```js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-import { param } from 'express-validator';
+import { param } from "express-validator";
 
 export const validateIdParam = withValidationErrors([
-  param('id')
+  param("id")
     .custom((value) => mongoose.Types.ObjectId.isValid(value))
-    .withMessage('invalid MongoDB id'),
+    .withMessage("invalid MongoDB id"),
 ]);
 ```
 
 ```js
 export const validateIdParam = withValidationErrors([
-  param('id').custom(async (value) => {
+  param("id").custom(async (value) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
-    if (!isValidId) throw new BadRequestError('invalid MongoDB id');
+    if (!isValidId) throw new BadRequestError("invalid MongoDB id");
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
   }),
@@ -2656,11 +2021,11 @@ export const validateIdParam = withValidationErrors([
 ```
 
 ```js
-import { body, param, validationResult } from 'express-validator';
-import { BadRequestError, NotFoundError } from '../errors/customErrors.js';
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
-import mongoose from 'mongoose';
-import Job from '../models/JobModel.js';
+import { body, param, validationResult } from "express-validator";
+import { BadRequestError, NotFoundError } from "../errors/customErrors.js";
+import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
+import mongoose from "mongoose";
+import Job from "../models/JobModel.js";
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -2669,7 +2034,7 @@ const withValidationErrors = (validateValues) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
-        if (errorMessages[0].startsWith('no job')) {
+        if (errorMessages[0].startsWith("no job")) {
           throw new NotFoundError(errorMessages);
         }
         throw new BadRequestError(errorMessages);
@@ -2689,7 +2054,7 @@ const withValidationErrors = (validateValues) => {
 models/UserModel.js
 
 ```js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   name: String,
@@ -2697,20 +2062,20 @@ const UserSchema = new mongoose.Schema({
   password: String,
   lastName: {
     type: String,
-    default: 'lastName',
+    default: "lastName",
   },
   location: {
     type: String,
-    default: 'my city',
+    default: "my city",
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
+    enum: ["user", "admin"],
+    default: "user",
   },
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model("User", UserSchema);
 ```
 
 #### User Controller and Router
@@ -2719,22 +2084,22 @@ controllers/authController.js
 
 ```js
 export const register = async (req, res) => {
-  res.send('register');
+  res.send("register");
 };
 export const login = async (req, res) => {
-  res.send('register');
+  res.send("register");
 };
 ```
 
 routers/authRouter.js
 
 ```js
-import { Router } from 'express';
-import { register, login } from '../controllers/authController.js';
+import { Router } from "express";
+import { register, login } from "../controllers/authController.js";
 const router = Router();
 
-router.post('/register', register);
-router.post('/login', login);
+router.post("/register", register);
+router.post("/login", login);
 
 export default router;
 ```
@@ -2742,9 +2107,9 @@ export default router;
 server.js
 
 ```js
-import authRouter from './routers/authRouter.js';
+import authRouter from "./routers/authRouter.js";
 
-app.use('/api/v1/auth', authRouter);
+app.use("/api/v1/auth", authRouter);
 ```
 
 #### Create User - Initial Setup
@@ -2752,8 +2117,8 @@ app.use('/api/v1/auth', authRouter);
 authController.js
 
 ```js
-import { StatusCodes } from 'http-status-codes';
-import User from '../models/UserModel.js';
+import { StatusCodes } from "http-status-codes";
+import User from "../models/UserModel.js";
 
 export const register = async (req, res) => {
   const user = await User.create(req.body);
@@ -2778,37 +2143,37 @@ export const register = async (req, res) => {
 validationMiddleware.js
 
 ```js
-import User from '../models/UserModel.js';
+import User from "../models/UserModel.js";
 
 export const validateRegisterInput = withValidationErrors([
-  body('name').notEmpty().withMessage('name is required'),
-  body('email')
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
     .notEmpty()
-    .withMessage('email is required')
+    .withMessage("email is required")
     .isEmail()
-    .withMessage('invalid email format')
+    .withMessage("invalid email format")
     .custom(async (email) => {
       const user = await User.findOne({ email });
       if (user) {
-        throw new BadRequestError('email already exists');
+        throw new BadRequestError("email already exists");
       }
     }),
-  body('password')
+  body("password")
     .notEmpty()
-    .withMessage('password is required')
+    .withMessage("password is required")
     .isLength({ min: 8 })
-    .withMessage('password must be at least 8 characters long'),
-  body('location').notEmpty().withMessage('location is required'),
-  body('lastName').notEmpty().withMessage('last name is required'),
+    .withMessage("password must be at least 8 characters long"),
+  body("location").notEmpty().withMessage("location is required"),
+  body("lastName").notEmpty().withMessage("last name is required"),
 ]);
 ```
 
 authRouter.js
 
 ```js
-import { validateRegisterInput } from '../middleware/validationMiddleware.js';
+import { validateRegisterInput } from "../middleware/validationMiddleware.js";
 
-router.post('/register', validateRegisterInput, register);
+router.post("/register", validateRegisterInput, register);
 ```
 
 #### Admin Role
@@ -2818,7 +2183,7 @@ authController.js
 ```js
 // first registered user is an admin
 const isFirstAccount = (await User.countDocuments()) === 0;
-req.body.role = isFirstAccount ? 'admin' : 'user';
+req.body.role = isFirstAccount ? "admin" : "user";
 
 const user = await User.create(req.body);
 ```
@@ -2835,7 +2200,7 @@ npm i bcryptjs@2.4.3
 authController.js
 
 ```js
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 const register = async (req, res) => {
   // a random value that is added to the password before hashing
@@ -2876,7 +2241,7 @@ Overall, while bcrypt and bcryptjs are both good choices for hashing passwords i
 utils/passwordUtils.js
 
 ```js
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 export async function hashPassword(password) {
   const salt = await bcrypt.genSalt(10);
@@ -2888,14 +2253,14 @@ export async function hashPassword(password) {
 authController.js
 
 ```js
-import { hashPassword } from '../utils/passwordUtils.js';
+import { hashPassword } from "../utils/passwordUtils.js";
 
 const register = async (req, res) => {
   const hashedPassword = await hashPassword(req.body.password);
   req.body.password = hashedPassword;
 
   const user = await User.create(req.body);
-  res.status(StatusCodes.CREATED).json({ msg: 'user created' });
+  res.status(StatusCodes.CREATED).json({ msg: "user created" });
 };
 ```
 
@@ -2914,21 +2279,21 @@ validationMiddleware.js
 
 ```js
 export const validateLoginInput = withValidationErrors([
-  body('email')
+  body("email")
     .notEmpty()
-    .withMessage('email is required')
+    .withMessage("email is required")
     .isEmail()
-    .withMessage('invalid email format'),
-  body('password').notEmpty().withMessage('password is required'),
+    .withMessage("invalid email format"),
+  body("password").notEmpty().withMessage("password is required"),
 ]);
 ```
 
 authRouter.js
 
 ```js
-import { validateLoginInput } from '../middleware/validationMiddleware.js';
+import { validateLoginInput } from "../middleware/validationMiddleware.js";
 
-router.post('/login', validateLoginInput, login);
+router.post("/login", validateLoginInput, login);
 ```
 
 #### Unauthenticated Error
@@ -2936,16 +2301,16 @@ router.post('/login', validateLoginInput, login);
 authController.js
 
 ```js
-import { UnauthenticatedError } from '../errors/customErrors.js';
+import { UnauthenticatedError } from "../errors/customErrors.js";
 
 const login = async (req, res) => {
   // check if user exists
   // check if password is correct
 
   const user = await User.findOne({ email: req.body.email });
-  if (!user) throw new UnauthenticatedError('invalid credentials');
+  if (!user) throw new UnauthenticatedError("invalid credentials");
 
-  res.send('login route');
+  res.send("login route");
 };
 ```
 
@@ -2963,7 +2328,7 @@ export async function comparePassword(password, hashedPassword) {
 authController.js
 
 ```js
-import { hashPassword, comparePassword } from '../utils/passwordUtils.js';
+import { hashPassword, comparePassword } from "../utils/passwordUtils.js";
 
 const login = async (req, res) => {
   // check if user exists
@@ -2971,15 +2336,15 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email: req.body.email });
 
-  if (!user) throw new UnauthenticatedError('invalid credentials');
+  if (!user) throw new UnauthenticatedError("invalid credentials");
 
   const isPasswordCorrect = await comparePassword(
     req.body.password,
     user.password
   );
 
-  if (!isPasswordCorrect) throw new UnauthenticatedError('invalid credentials');
-  res.send('login route');
+  if (!isPasswordCorrect) throw new UnauthenticatedError("invalid credentials");
+  res.send("login route");
 };
 ```
 
@@ -2987,7 +2352,7 @@ Refactor
 
 ```js
 const isValidUser = user && (await comparePassword(password, user.password));
-if (!isValidUser) throw new UnauthenticatedError('invalid credentials');
+if (!isValidUser) throw new UnauthenticatedError("invalid credentials");
 ```
 
 #### JSON Web Token
@@ -3003,7 +2368,7 @@ npm i jsonwebtoken@9.0.0
 utils/tokenUtils.js
 
 ```js
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 export const createJWT = (payload) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -3022,7 +2387,7 @@ These environment variables (JWT_SECRET and JWT_EXPIRES_IN) are read from the sy
 authController.js
 
 ```js
-import { createJWT } from '../utils/tokenUtils.js';
+import { createJWT } from "../utils/tokenUtils.js";
 
 const token = createJWT({ userId: user._id, role: user.role });
 console.log(token);
@@ -3056,13 +2421,13 @@ authControllers.js
 ```js
 const oneDay = 1000 * 60 * 60 * 24;
 
-res.cookie('token', token, {
+res.cookie("token", token, {
   httpOnly: true,
   expires: new Date(Date.now() + oneDay),
-  secure: process.env.NODE_ENV === 'production',
+  secure: process.env.NODE_ENV === "production",
 });
 
-res.status(StatusCodes.CREATED).json({ msg: 'user logged in' });
+res.status(StatusCodes.CREATED).json({ msg: "user logged in" });
 ```
 
 ```js
@@ -3118,7 +2483,7 @@ middleware/authMiddleware.js
 
 ```js
 export const authenticateUser = async (req, res, next) => {
-  console.log('auth middleware');
+  console.log("auth middleware");
   next();
 };
 ```
@@ -3126,9 +2491,9 @@ export const authenticateUser = async (req, res, next) => {
 server.js
 
 ```js
-import { authenticateUser } from './middleware/authMiddleware.js';
+import { authenticateUser } from "./middleware/authMiddleware.js";
 
-app.use('/api/v1/jobs', authenticateUser, jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
 ```
 
 ##### Cookie Parser
@@ -3142,7 +2507,7 @@ npm i cookie-parser@1.4.6
 server.js
 
 ```js
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 app.use(cookieParser());
 ```
 
@@ -3151,12 +2516,12 @@ app.use(cookieParser());
 authMiddleware.js
 
 ```js
-import { UnauthenticatedError } from '../customErrors.js';
+import { UnauthenticatedError } from "../customErrors.js";
 
 export const authenticateUser = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
-    throw new UnauthenticatedError('authentication invalid');
+    throw new UnauthenticatedError("authentication invalid");
   }
   next();
 };
@@ -3176,13 +2541,13 @@ export const verifyJWT = (token) => {
 authMiddleware.js
 
 ```js
-import { UnauthenticatedError } from '../customErrors.js';
-import { verifyJWT } from '../utils/tokenUtils.js';
+import { UnauthenticatedError } from "../customErrors.js";
+import { verifyJWT } from "../utils/tokenUtils.js";
 
 export const authenticateUser = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
-    throw new UnauthenticatedError('authentication invalid');
+    throw new UnauthenticatedError("authentication invalid");
   }
 
   try {
@@ -3190,7 +2555,7 @@ export const authenticateUser = async (req, res, next) => {
     req.user = { userId, role };
     next();
   } catch (error) {
-    throw new UnauthenticatedError('authentication invalid');
+    throw new UnauthenticatedError("authentication invalid");
   }
 };
 ```
@@ -3246,18 +2611,18 @@ import {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
-} from '../errors/customErrors.js';
+} from "../errors/customErrors.js";
 
 export const validateIdParam = withValidationErrors([
-  param('id').custom(async (value, { req }) => {
+  param("id").custom(async (value, { req }) => {
     const isValidMongoId = mongoose.Types.ObjectId.isValid(value);
-    if (!isValidMongoId) throw new BadRequestError('invalid MongoDB id');
+    if (!isValidMongoId) throw new BadRequestError("invalid MongoDB id");
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id ${value}`);
-    const isAdmin = req.user.role === 'admin';
+    const isAdmin = req.user.role === "admin";
     const isOwner = req.user.userId === job.createdBy.toString();
     if (!isAdmin && !isOwner)
-      throw UnauthorizedError('not authorized to access this route');
+      throw UnauthorizedError("not authorized to access this route");
   }),
 ]);
 ```
@@ -3268,22 +2633,22 @@ controllers/authController.js
 
 ```js
 const logout = (req, res) => {
-  res.cookie('token', 'logout', {
+  res.cookie("token", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
   });
-  res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+  res.status(StatusCodes.OK).json({ msg: "user logged out!" });
 };
 ```
 
 routes/authRouter.js
 
 ```js
-import { Router } from 'express';
+import { Router } from "express";
 const router = Router();
-import { logout } from '../controllers/authController.js';
+import { logout } from "../controllers/authController.js";
 
-router.get('/logout', logout);
+router.get("/logout", logout);
 
 export default router;
 ```
@@ -3293,47 +2658,47 @@ export default router;
 controllers/userController.js
 
 ```js
-import { StatusCodes } from 'http-status-codes';
-import User from '../models/User.js';
-import Job from '../models/Job.js';
+import { StatusCodes } from "http-status-codes";
+import User from "../models/User.js";
+import Job from "../models/Job.js";
 
 export const getCurrentUser = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'get current user' });
+  res.status(StatusCodes.OK).json({ msg: "get current user" });
 };
 
 export const getApplicationStats = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'application stats' });
+  res.status(StatusCodes.OK).json({ msg: "application stats" });
 };
 
 export const updateUser = async (req, res) => {
-  res.status(StatusCodes.OK).json({ msg: 'update user' });
+  res.status(StatusCodes.OK).json({ msg: "update user" });
 };
 ```
 
 routes/userRouter.js
 
 ```js
-import { Router } from 'express';
+import { Router } from "express";
 const router = Router();
 
 import {
   getCurrentUser,
   getApplicationStats,
   updateUser,
-} from '../controllers/userController.js';
+} from "../controllers/userController.js";
 
-router.get('/current-user', getCurrentUser);
-router.get('/admin/app-stats', getApplicationStats);
-router.patch('/update-user', updateUser);
+router.get("/current-user", getCurrentUser);
+router.get("/admin/app-stats", getApplicationStats);
+router.patch("/update-user", updateUser);
 export default router;
 ```
 
 server.js
 
 ```js
-import userRouter from './routers/userRouter.js';
+import userRouter from "./routers/userRouter.js";
 
-app.use('/api/v1/users', authenticateUser, userRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 ```
 
 #### Get Current User
@@ -3371,27 +2736,27 @@ middleware/validationMiddleware.js
 
 ```js
 const validateUpdateUserInput = withValidationErrors([
-  body('name').notEmpty().withMessage('name is required'),
-  body('email')
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
     .notEmpty()
-    .withMessage('email is required')
+    .withMessage("email is required")
     .isEmail()
-    .withMessage('invalid email format')
+    .withMessage("invalid email format")
     .custom(async (email, { req }) => {
       const user = await User.findOne({ email });
       if (user && user._id.toString() !== req.user.userId) {
-        throw new Error('email already exists');
+        throw new Error("email already exists");
       }
     }),
-  body('lastName').notEmpty().withMessage('last name is required'),
-  body('location').notEmpty().withMessage('location is required'),
+  body("lastName").notEmpty().withMessage("last name is required"),
+  body("location").notEmpty().withMessage("location is required"),
 ]);
 ```
 
 ```js
 export const updateUser = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(req.user.userId, req.body);
-  res.status(StatusCodes.OK).json({ msg: 'user updated' });
+  res.status(StatusCodes.OK).json({ msg: "user updated" });
 };
 ```
 
@@ -3418,7 +2783,7 @@ export const getApplicationStats = async (req, res) => {
 export const authorizePermissions = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      throw new UnauthorizedError('Unauthorized to access this route');
+      throw new UnauthorizedError("Unauthorized to access this route");
     }
     next();
   };
@@ -3426,10 +2791,10 @@ export const authorizePermissions = (...roles) => {
 ```
 
 ```js
-import { authorizePermissions } from '../middleware/authMiddleware.js';
+import { authorizePermissions } from "../middleware/authMiddleware.js";
 
-router.get('/admin/app-stats', [
-  authorizePermissions('admin'),
+router.get("/admin/app-stats", [
+  authorizePermissions("admin"),
   getApplicationStats,
 ]);
 ```
@@ -3455,15 +2820,15 @@ cd client && npm run dev
 server.js
 
 ```js
-app.get('/api/v1/test', (req, res) => {
-  res.json({ msg: 'test route' });
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
 });
 ```
 
 client/src/main.jsx
 
 ```js
-fetch('http://localhost:5100/api/v1/test')
+fetch("http://localhost:5100/api/v1/test")
   .then((res) => res.json())
   .then((data) => console.log(data));
 ```
@@ -3475,10 +2840,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:5100/api',
+      "/api": {
+        target: "http://localhost:5100/api",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
@@ -3488,7 +2853,7 @@ export default defineConfig({
 main.jsx
 
 ```js
-fetch('/api/v1/test')
+fetch("/api/v1/test")
   .then((res) => res.json())
   .then((data) => console.log(data));
 ```
@@ -3536,9 +2901,9 @@ npm i axios@1.3.6
 main.jsx
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 
-const data = await axios.get('/api/v1/test');
+const data = await axios.get("/api/v1/test");
 console.log(data);
 ```
 
@@ -3547,9 +2912,9 @@ console.log(data);
 utils/customFetch.js
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 const customFetch = axios.create({
-  baseURL: '/api/v1',
+  baseURL: "/api/v1",
 });
 
 export default customFetch;
@@ -3558,23 +2923,23 @@ export default customFetch;
 main.jsx
 
 ```js
-import customFetch from './utils/customFetch.js';
+import customFetch from "./utils/customFetch.js";
 
-const data = await customFetch.get('/test');
+const data = await customFetch.get("/test");
 console.log(data);
 ```
 
 #### Typical Form Submission
 
 ```js
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 const MyForm = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await axios.post('url', { value });
+    const data = await axios.post("url", { value });
   };
 
   return <form onSubmit={handleSubmit}>.....</form>;
@@ -3590,14 +2955,14 @@ Route actions are the "writes" to route loader "reads". They provide a way for a
 Register.jsx
 
 ```js
-import { Form, redirect, useNavigation, Link } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
-import { FormRow, Logo } from '../components';
+import { Form, redirect, useNavigation, Link } from "react-router-dom";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
+import { FormRow, Logo } from "../components";
 
 const Register = () => {
   return (
     <Wrapper>
-      <Form method='post' className='form'>
+      <Form method="post" className="form">
         ...
       </Form>
     </Wrapper>
@@ -3633,8 +2998,8 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-    await customFetch.post('/auth/register', data);
-    return redirect('/login');
+    await customFetch.post("/auth/register", data);
+    return redirect("/login");
   } catch (error) {
     return error;
   }
@@ -3671,13 +3036,13 @@ Register.jsx
 ```js
 const Register = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
-      <Form method='post' className='form'>
+      <Form method="post" className="form">
         ....
-        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
-          {isSubmitting ? 'submitting...' : 'submit'}
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? "submitting..." : "submit"}
         </button>
         ...
       </Form>
@@ -3700,12 +3065,12 @@ npm i react-toastify@9.1.2
 main.jsx
 
 ```js
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-ReactDOM.createRoot(document.getElementById('root')).render(
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
-    <ToastContainer position='top-center' />
+    <ToastContainer position="top-center" />
   </React.StrictMode>
 );
 ```
@@ -3713,15 +3078,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 Register.jsx
 
 ```js
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-    await customFetch.post('/auth/register', data);
-    toast.success('Registration successful');
-    return redirect('/login');
+    await customFetch.post("/auth/register", data);
+    toast.success("Registration successful");
+    return redirect("/login");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -3732,19 +3097,19 @@ export const action = async ({ request }) => {
 #### Login User
 
 ```js
-import { Link, Form, redirect, useNavigation } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
-import { FormRow, Logo } from '../components';
-import customFetch from '../utils/customFetch';
-import { toast } from 'react-toastify';
+import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
+import { FormRow, Logo } from "../components";
+import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-    await customFetch.post('/auth/login', data);
-    toast.success('Login successful');
-    return redirect('/dashboard');
+    await customFetch.post("/auth/login", data);
+    toast.success("Login successful");
+    return redirect("/dashboard");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -3753,23 +3118,23 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
-      <Form method='post' className='form'>
+      <Form method="post" className="form">
         <Logo />
         <h4>login</h4>
-        <FormRow type='email' name='email' defaultValue='john@gmail.com' />
-        <FormRow type='password' name='password' defaultValue='secret123' />
-        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
-          {isSubmitting ? 'submitting...' : 'submit'}
+        <FormRow type="email" name="email" defaultValue="john@gmail.com" />
+        <FormRow type="password" name="password" defaultValue="secret123" />
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? "submitting..." : "submit"}
         </button>
-        <button type='button' className='btn btn-block'>
+        <button type="button" className="btn btn-block">
           explore the app
         </button>
         <p>
           Not a member yet?
-          <Link to='/register' className='member-btn'>
+          <Link to="/register" className="member-btn">
             Register
           </Link>
         </p>
@@ -3783,20 +3148,20 @@ export default Login;
 #### Access Action Data (optional)
 
 ```js
-import { useActionData } from 'react-router-dom';
+import { useActionData } from "react-router-dom";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  const errors = { msg: '' };
+  const errors = { msg: "" };
   if (data.password.length < 3) {
-    errors.msg = 'password too short';
+    errors.msg = "password too short";
     return errors;
   }
   try {
-    await customFetch.post('/auth/login', data);
-    toast.success('Login successful');
-    return redirect('/dashboard');
+    await customFetch.post("/auth/login", data);
+    toast.success("Login successful");
+    return redirect("/dashboard");
   } catch (error) {
     // toast.error(error?.response?.data?.msg);
     errors.msg = error.response.data.msg;
@@ -3809,9 +3174,9 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Form method='post' className='form'>
+      <Form method="post" className="form">
         ...
-        {errors && <p style={{ color: 'red' }}>{errors.msg}</p>}
+        {errors && <p style={{ color: "red" }}>{errors.msg}</p>}
         ...
       </Form>
     </Wrapper>
@@ -3878,16 +3243,16 @@ export default DashboardLayout;
 DashboardLayout.jsx
 
 ```js
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
 
   const logoutUser = async () => {
-    navigate('/');
-    await customFetch.get('/auth/logout');
-    toast.success('Logging out...');
+    navigate("/");
+    await customFetch.get("/auth/logout");
+    toast.success("Logging out...");
   };
 };
 ```
@@ -3897,39 +3262,39 @@ const DashboardLayout = () => {
 pages/AddJob.jsx
 
 ```js
-import { FormRow } from '../components';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useOutletContext } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
-import { Form, useNavigation, redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import customFetch from '../utils/customFetch';
+import { FormRow } from "../components";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { useOutletContext } from "react-router-dom";
+import { JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
+import { Form, useNavigation, redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import customFetch from "../utils/customFetch";
 
 const AddJob = () => {
   const { user } = useOutletContext();
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
-      <Form method='post' className='form'>
-        <h4 className='form-title'>add job</h4>
-        <div className='form-center'>
-          <FormRow type='text' name='position' />
-          <FormRow type='text' name='company' />
+      <Form method="post" className="form">
+        <h4 className="form-title">add job</h4>
+        <div className="form-center">
+          <FormRow type="text" name="position" />
+          <FormRow type="text" name="company" />
           <FormRow
-            type='text'
-            labelText='job location'
-            name='jobLocation'
+            type="text"
+            labelText="job location"
+            name="jobLocation"
             defaultValue={user.location}
           />
 
           <button
-            type='submit'
-            className='btn btn-block form-btn '
+            type="submit"
+            className="btn btn-block form-btn "
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'submitting...' : 'submit'}
+            {isSubmitting ? "submitting..." : "submit"}
           </button>
         </div>
       </Form>
@@ -3943,14 +3308,14 @@ export default AddJob;
 #### Select Input
 
 ```js
-<div className='form-row'>
-  <label htmlFor='jobStatus' className='form-label'>
+<div className="form-row">
+  <label htmlFor="jobStatus" className="form-label">
     job status
   </label>
   <select
-    name='jobStatus'
-    id='jobStatus'
-    className='form-select'
+    name="jobStatus"
+    id="jobStatus"
+    className="form-select"
     defaultValue={JOB_TYPE.FULL_TIME}
   >
     {Object.values(JOB_TYPE).map((itemValue) => {
@@ -3969,16 +3334,16 @@ export default AddJob;
 components/FormRowSelect.jsx
 
 ```js
-const FormRowSelect = ({ name, labelText, list, defaultValue = '' }) => {
+const FormRowSelect = ({ name, labelText, list, defaultValue = "" }) => {
   return (
-    <div className='form-row'>
-      <label htmlFor={name} className='form-label'>
+    <div className="form-row">
+      <label htmlFor={name} className="form-label">
         {labelText || name}
       </label>
       <select
         name={name}
         id={name}
-        className='form-select'
+        className="form-select"
         defaultValue={defaultValue}
       >
         {list.map((itemValue) => {
@@ -4022,8 +3387,8 @@ export const action = async ({ request }) => {
   const data = Object.fromEntries(formData);
 
   try {
-    await customFetch.post('/jobs', data);
-    toast.success('Job added successfully');
+    await customFetch.post("/jobs", data);
+    toast.success("Job added successfully");
     return null;
   } catch (error) {
     toast.error(error?.response?.data?.msg);
@@ -4050,9 +3415,9 @@ export const action = async ({ request }) => {
   const data = Object.fromEntries(formData);
 
   try {
-    await customFetch.post('/jobs', data);
-    toast.success('Job added successfully');
-    return redirect('all-jobs');
+    await customFetch.post("/jobs", data);
+    toast.success("Job added successfully");
+    return redirect("all-jobs");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -4065,7 +3430,7 @@ export const action = async ({ request }) => {
 wrappers/DashboardFormPage.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius);
@@ -4122,15 +3487,15 @@ export default Wrapper;
 - handle loader in App.jsx
 
 ```js
-import { toast } from 'react-toastify';
-import { JobsContainer, SearchContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useLoaderData } from 'react-router-dom';
-import { useContext, createContext } from 'react';
+import { toast } from "react-toastify";
+import { JobsContainer, SearchContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useLoaderData } from "react-router-dom";
+import { useContext, createContext } from "react";
 
 export const loader = async ({ request }) => {
   try {
-    const { data } = await customFetch.get('/jobs');
+    const { data } = await customFetch.get("/jobs");
     return {
       data,
     };
@@ -4179,10 +3544,10 @@ export const useAllJobsContext = () => useContext(AllJobsContext);
 JobsContainer.jsx
 
 ```js
-import Job from './Job';
-import Wrapper from '../assets/wrappers/JobsContainer';
+import Job from "./Job";
+import Wrapper from "../assets/wrappers/JobsContainer";
 
-import { useAllJobsContext } from '../pages/AllJobs';
+import { useAllJobsContext } from "../pages/AllJobs";
 
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
@@ -4197,7 +3562,7 @@ const JobsContainer = () => {
 
   return (
     <Wrapper>
-      <div className='jobs'>
+      <div className="jobs">
         {jobs.map((job) => {
           return <Job key={job._id} {...job} />;
         })}
@@ -4214,7 +3579,7 @@ export default JobsContainer;
 wrappers/JobsContainer.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   margin-top: 4rem;
@@ -4254,12 +3619,12 @@ npm i dayjs@1.11.7
 - create JobInfo component
 
 ```js
-import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
-import { Link, Form } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Job';
-import JobInfo from './JobInfo';
-import day from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { Link, Form } from "react-router-dom";
+import Wrapper from "../assets/wrappers/Job";
+import JobInfo from "./JobInfo";
+import day from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 day.extend(advancedFormat);
 
 const Job = ({
@@ -4271,29 +3636,29 @@ const Job = ({
   createdAt,
   jobStatus,
 }) => {
-  const date = day(createdAt).format('MMM Do, YYYY');
+  const date = day(createdAt).format("MMM Do, YYYY");
 
   return (
     <Wrapper>
       <header>
-        <div className='main-icon'>{company.charAt(0)}</div>
-        <div className='info'>
+        <div className="main-icon">{company.charAt(0)}</div>
+        <div className="info">
           <h5>{position}</h5>
           <p>{company}</p>
         </div>
       </header>
-      <div className='content'>
-        <div className='content-center'>
+      <div className="content">
+        <div className="content-center">
           <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
           <JobInfo icon={<FaCalendarAlt />} text={date} />
           <JobInfo icon={<FaBriefcase />} text={jobType} />
           <div className={`status ${jobStatus}`}>{jobStatus}</div>
         </div>
 
-        <footer className='actions'>
-          <Link className='btn edit-btn'>Edit</Link>
+        <footer className="actions">
+          <Link className="btn edit-btn">Edit</Link>
           <Form>
-            <button type='submit' className='btn delete-btn'>
+            <button type="submit" className="btn delete-btn">
               Delete
             </button>
           </Form>
@@ -4309,13 +3674,13 @@ export default Job;
 #### JobInfo Component
 
 ```js
-import Wrapper from '../assets/wrappers/JobInfo';
+import Wrapper from "../assets/wrappers/JobInfo";
 
 const JobInfo = ({ icon, text }) => {
   return (
     <Wrapper>
-      <span className='job-icon'>{icon}</span>
-      <span className='job-text'>{text}</span>
+      <span className="job-icon">{icon}</span>
+      <span className="job-text">{text}</span>
     </Wrapper>
   );
 };
@@ -4328,7 +3693,7 @@ export default JobInfo;
 wrappers/JobInfo.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -4354,7 +3719,7 @@ export default Wrapper;
 #### Job - CSS (optional)
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.article`
   background: var(--background-secondary-color);
@@ -4445,7 +3810,7 @@ export default Wrapper;
 Job.jsx
 
 ```js
-<Link to={`../edit-job/${_id}`} className='btn edit-btn'>
+<Link to={`../edit-job/${_id}`} className="btn edit-btn">
   Edit
 </Link>
 ```
@@ -4453,13 +3818,13 @@ Job.jsx
 pages/EditJob.jsx
 
 ```js
-import { FormRow, FormRowSelect } from '../components';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useLoaderData } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
-import { Form, useNavigation, redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import customFetch from '../utils/customFetch';
+import { FormRow, FormRowSelect } from "../components";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { useLoaderData } from "react-router-dom";
+import { JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
+import { Form, useNavigation, redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import customFetch from "../utils/customFetch";
 
 export const loader = async () => {
   return null;
@@ -4499,7 +3864,7 @@ export const loader = async ({ params }) => {
     return data;
   } catch (error) {
     toast.error(error.response.data.msg);
-    return redirect('/dashboard/all-jobs');
+    return redirect("/dashboard/all-jobs");
   }
 };
 export const action = async () => {
@@ -4512,7 +3877,7 @@ const EditJob = () => {
   const { job } = useLoaderData();
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   return <h1>EditJob Page</h1>;
 };
 export default EditJob;
@@ -4527,8 +3892,8 @@ export const action = async ({ request, params }) => {
 
   try {
     await customFetch.patch(`/jobs/${params.id}`, data);
-    toast.success('Job edited successfully');
-    return redirect('/dashboard/all-jobs');
+    toast.success("Job edited successfully");
+    return redirect("/dashboard/all-jobs");
   } catch (error) {
     toast.error(error.response.data.msg);
     return error;
@@ -4539,40 +3904,40 @@ const EditJob = () => {
   const { job } = useLoaderData();
 
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Wrapper>
-      <Form method='post' className='form'>
-        <h4 className='form-title'>edit job</h4>
-        <div className='form-center'>
-          <FormRow type='text' name='position' defaultValue={job.position} />
-          <FormRow type='text' name='company' defaultValue={job.company} />
+      <Form method="post" className="form">
+        <h4 className="form-title">edit job</h4>
+        <div className="form-center">
+          <FormRow type="text" name="position" defaultValue={job.position} />
+          <FormRow type="text" name="company" defaultValue={job.company} />
           <FormRow
-            type='text'
-            labelText='job location'
-            name='jobLocation'
+            type="text"
+            labelText="job location"
+            name="jobLocation"
             defaultValue={job.jobLocation}
           />
 
           <FormRowSelect
-            name='jobStatus'
-            labelText='job status'
+            name="jobStatus"
+            labelText="job status"
             defaultValue={job.jobStatus}
             list={Object.values(JOB_STATUS)}
           />
           <FormRowSelect
-            name='jobType'
-            labelText='job type'
+            name="jobType"
+            labelText="job type"
             defaultValue={job.jobType}
             list={Object.values(JOB_TYPE)}
           />
           <button
-            type='submit'
-            className='btn btn-block form-btn '
+            type="submit"
+            className="btn btn-block form-btn "
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'submitting...' : 'submit'}
+            {isSubmitting ? "submitting..." : "submit"}
           </button>
         </div>
       </Form>
@@ -4588,8 +3953,8 @@ export default EditJob;
 Job.jsx
 
 ```js
-<Form method='post' action={`../delete-job/${_id}`}>
-  <button type='submit' className='btn delete-btn'>
+<Form method="post" action={`../delete-job/${_id}`}>
+  <button type="submit" className="btn delete-btn">
     Delete
   </button>
 </Form>
@@ -4598,18 +3963,18 @@ Job.jsx
 pages/DeleteJob.jsx
 
 ```js
-import { redirect } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
-import { toast } from 'react-toastify';
+import { redirect } from "react-router-dom";
+import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 export async function action({ params }) {
   try {
     await customFetch.delete(`/jobs/${params.id}`);
-    toast.success('Job deleted successfully');
+    toast.success("Job deleted successfully");
   } catch (error) {
     toast.error(error.response.data.msg);
   }
-  return redirect('/dashboard/all-jobs');
+  return redirect("/dashboard/all-jobs");
 }
 ```
 
@@ -4626,19 +3991,19 @@ import { action as deleteJobAction } from './pages/DeleteJob';
 pages/Admin.jsx
 
 ```js
-import { FaSuitcaseRolling, FaCalendarCheck } from 'react-icons/fa';
+import { FaSuitcaseRolling, FaCalendarCheck } from "react-icons/fa";
 
-import { useLoaderData, redirect } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
-import Wrapper from '../assets/wrappers/StatsContainer';
-import { toast } from 'react-toastify';
+import { useLoaderData, redirect } from "react-router-dom";
+import customFetch from "../utils/customFetch";
+import Wrapper from "../assets/wrappers/StatsContainer";
+import { toast } from "react-toastify";
 export const loader = async () => {
   try {
-    const response = await customFetch.get('/users/admin/app-stats');
+    const response = await customFetch.get("/users/admin/app-stats");
     return response.data;
   } catch (error) {
-    toast.error('You are not authorized to view this page');
-    return redirect('/dashboard');
+    toast.error("You are not authorized to view this page");
+    return redirect("/dashboard");
   }
 };
 
@@ -4674,7 +4039,7 @@ NavLinks.jsx
   links.map((link) => {
     const { text, path, icon } = link;
     const { role } = user;
-    if (role !== 'admin' && path === 'admin') return;
+    if (role !== "admin" && path === "admin") return;
   });
 }
 ```
@@ -4687,16 +4052,16 @@ NavLinks.jsx
   StatItem.jsx
 
 ```js
-import Wrapper from '../assets/wrappers/StatItem';
+import Wrapper from "../assets/wrappers/StatItem";
 
 const StatItem = ({ count, title, icon, color, bcg }) => {
   return (
     <Wrapper color={color} bcg={bcg}>
       <header>
-        <span className='count'>{count}</span>
-        <span className='icon'>{icon}</span>
+        <span className="count">{count}</span>
+        <span className="icon">{icon}</span>
       </header>
-      <h5 className='title'>{title}</h5>
+      <h5 className="title">{title}</h5>
     </Wrapper>
   );
 };
@@ -4707,7 +4072,7 @@ export default StatItem;
 Admin.jsx
 
 ```js
-import { StatItem } from '../components';
+import { StatItem } from "../components";
 
 const Admin = () => {
   const { users, jobs } = useLoaderData();
@@ -4715,17 +4080,17 @@ const Admin = () => {
   return (
     <Wrapper>
       <StatItem
-        title='current users'
+        title="current users"
         count={users}
-        color='#e9b949'
-        bcg='#fcefc7'
+        color="#e9b949"
+        bcg="#fcefc7"
         icon={<FaSuitcaseRolling />}
       />
       <StatItem
-        title='total jobs'
+        title="total jobs"
         count={jobs}
-        color='#647acb'
-        bcg='#e0e8f9'
+        color="#647acb"
+        bcg="#e0e8f9"
         icon={<FaCalendarCheck />}
       />
     </Wrapper>
@@ -4739,7 +4104,7 @@ export default Admin;
 wrappers/StatsContainer.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   display: grid;
@@ -4759,7 +4124,7 @@ export default Wrapper;
 wrappers/StatItem.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.article`
   padding: 2rem;
@@ -4815,13 +4180,13 @@ export default Wrapper;
 server.js
 
 ```js
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(path.resolve(__dirname, './public')));
+app.use(express.static(path.resolve(__dirname, "./public")));
 ```
 
 - http://localhost:5100/imageName
@@ -4845,51 +4210,51 @@ const UserSchema = new mongoose.Schema({
 pages/Profile.jsx
 
 ```js
-import { FormRow } from '../components';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useOutletContext } from 'react-router-dom';
-import { useNavigation, Form } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
-import { toast } from 'react-toastify';
+import { FormRow } from "../components";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { useOutletContext } from "react-router-dom";
+import { useNavigation, Form } from "react-router-dom";
+import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user } = useOutletContext();
   const { name, lastName, email, location } = user;
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
-      <Form method='post' className='form' encType='multipart/form-data'>
-        <h4 className='form-title'>profile</h4>
+      <Form method="post" className="form" encType="multipart/form-data">
+        <h4 className="form-title">profile</h4>
 
-        <div className='form-center'>
-          <div className='form-row'>
-            <label htmlFor='image' className='form-label'>
+        <div className="form-center">
+          <div className="form-row">
+            <label htmlFor="image" className="form-label">
               Select an image file (max 0.5 MB):
             </label>
             <input
-              type='file'
-              id='avatar'
-              name='avatar'
-              className='form-input'
-              accept='image/*'
+              type="file"
+              id="avatar"
+              name="avatar"
+              className="form-input"
+              accept="image/*"
             />
           </div>
-          <FormRow type='text' name='name' defaultValue={name} />
+          <FormRow type="text" name="name" defaultValue={name} />
           <FormRow
-            type='text'
-            labelText='last name'
-            name='lastName'
+            type="text"
+            labelText="last name"
+            name="lastName"
             defaultValue={lastName}
           />
-          <FormRow type='email' name='email' defaultValue={email} />
-          <FormRow type='text' name='location' defaultValue={location} />
+          <FormRow type="email" name="email" defaultValue={email} />
+          <FormRow type="text" name="location" defaultValue={location} />
           <button
-            className='btn btn-block form-btn'
-            type='submit'
+            className="btn btn-block form-btn"
+            type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'submitting...' : 'save changes'}
+            {isSubmitting ? "submitting..." : "save changes"}
           </button>
         </div>
       </Form>
@@ -4908,15 +4273,15 @@ export default Profile;
 export const action = async ({ request }) => {
   const formData = await request.formData();
 
-  const file = formData.get('avatar');
+  const file = formData.get("avatar");
   if (file && file.size > 500000) {
-    toast.error('Image size too large');
+    toast.error("Image size too large");
     return null;
   }
 
   try {
-    await customFetch.patch('/users/update-user', formData);
-    toast.success('Profile updated successfully');
+    await customFetch.patch("/users/update-user", formData);
+    toast.success("Profile updated successfully");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
   }
@@ -4936,12 +4301,12 @@ Multer is a popular middleware package for handling multipart/form-data in Node.
 - setup multer
 
 ```js
-import multer from 'multer';
+import multer from "multer";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // set the directory where uploaded files will be stored
-    cb(null, 'public/uploads');
+    cb(null, "public/uploads");
   },
   filename: (req, file, cb) => {
     const fileName = file.originalname;
@@ -4957,11 +4322,11 @@ export default upload;
 routes/userRouter.js
 
 ```js
-import upload from '../middleware/multerMiddleware.js';
+import upload from "../middleware/multerMiddleware.js";
 
 router.patch(
-  '/update-user',
-  upload.single('avatar'),
+  "/update-user",
+  upload.single("avatar"),
   validateUpdateUserInput,
   updateUser
 );
@@ -5000,7 +4365,7 @@ npm i cloudinary@1.37.3
 server
 
 ```js
-import cloudinary from 'cloudinary';
+import cloudinary from "cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -5014,8 +4379,8 @@ cloudinary.config({
 controllers/userController.js
 
 ```js
-import cloudinary from 'cloudinary';
-import { promises as fs } from 'fs';
+import cloudinary from "cloudinary";
+import { promises as fs } from "fs";
 
 export const updateUser = async (req, res) => {
   const newUser = { ...req.body };
@@ -5032,7 +4397,7 @@ export const updateUser = async (req, res) => {
   if (req.file && updatedUser.avatarPublicId) {
     await cloudinary.v2.uploader.destroy(updatedUser.avatarPublicId);
   }
-  res.status(StatusCodes.OK).json({ msg: 'update user' });
+  res.status(StatusCodes.OK).json({ msg: "update user" });
 };
 ```
 
@@ -5041,7 +4406,7 @@ export const updateUser = async (req, res) => {
 ```js
 {
   user.avatar ? (
-    <img src={user.avatar} alt='avatar' className='img' />
+    <img src={user.avatar} alt="avatar" className="img" />
   ) : (
     <FaUserCircle />
   );
@@ -5056,17 +4421,17 @@ export const updateUser = async (req, res) => {
 - make sure to add formBtn prop
 
 ```js
-import { useNavigation } from 'react-router-dom';
+import { useNavigation } from "react-router-dom";
 const SubmitBtn = ({ formBtn }) => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   return (
     <button
-      type='submit'
-      className={`btn btn-block ${formBtn && 'form-btn'}`}
+      type="submit"
+      className={`btn btn-block ${formBtn && "form-btn"}`}
       disabled={isSubmitting}
     >
-      {isSubmitting ? 'submitting...' : 'submit'}
+      {isSubmitting ? "submitting..." : "submit"}
     </button>
   );
 };
@@ -5200,27 +4565,27 @@ export const checkForTestUser = (req, res, next) => {
 - setup for test user and admin
 
 ```js
-import { readFile } from 'fs/promises';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import { readFile } from "fs/promises";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 dotenv.config();
 
-import Job from './models/JobModel.js';
-import User from './models/UserModel.js';
+import Job from "./models/JobModel.js";
+import User from "./models/UserModel.js";
 try {
   await mongoose.connect(process.env.MONGO_URL);
   // const user = await User.findOne({ email: 'john@gmail.com' });
-  const user = await User.findOne({ email: 'test@test.com' });
+  const user = await User.findOne({ email: "test@test.com" });
 
   const jsonJobs = JSON.parse(
-    await readFile(new URL('./utils/mockData.json', import.meta.url))
+    await readFile(new URL("./utils/mockData.json", import.meta.url))
   );
   const jobs = jsonJobs.map((job) => {
     return { ...job, createdBy: user._id };
   });
   await Job.deleteMany({ createdBy: user._id });
   await Job.create(jobs);
-  console.log('Success!!!');
+  console.log("Success!!!");
   process.exit(0);
 } catch (error) {
   console.log(error);
@@ -5237,8 +4602,8 @@ try {
 jobController.js
 
 ```js
-import mongoose from 'mongoose';
-import day from 'dayjs';
+import mongoose from "mongoose";
+import day from "dayjs";
 
 export const showStats = async (req, res) => {
   const defaultStats = {
@@ -5249,15 +4614,15 @@ export const showStats = async (req, res) => {
 
   let monthlyApplications = [
     {
-      date: 'May 23',
+      date: "May 23",
       count: 12,
     },
     {
-      date: 'Jun 23',
+      date: "Jun 23",
       count: 9,
     },
     {
-      date: 'Jul 23',
+      date: "Jul 23",
       count: 3,
     },
   ];
@@ -5277,7 +4642,7 @@ jobController.js
 export const showStats = async (req, res) => {
   let stats = await Job.aggregate([
     { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
-    { $group: { _id: '$jobStatus', count: { $sum: 1 } } },
+    { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
   ]);
   stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
@@ -5295,11 +4660,11 @@ export const showStats = async (req, res) => {
     { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     {
       $group: {
-        _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
         count: { $sum: 1 },
       },
     },
-    { $sort: { '_id.year': -1, '_id.month': -1 } },
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
     { $limit: 6 },
   ]);
   monthlyApplications = monthlyApplications
@@ -5312,7 +4677,7 @@ export const showStats = async (req, res) => {
       const date = day()
         .month(month - 1)
         .year(year)
-        .format('MMM YY');
+        .format("MMM YY");
       return { date, count };
     })
     .reverse();
@@ -5326,7 +4691,7 @@ export const showStats = async (req, res) => {
 ```js
 let stats = await Job.aggregate([
   { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
-  { $group: { _id: '$jobStatus', count: { $sum: 1 } } },
+  { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
 ]);
 ```
 
@@ -5341,11 +4706,11 @@ let monthlyApplications = await Job.aggregate([
   { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
   {
     $group: {
-      _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
+      _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
       count: { $sum: 1 },
     },
   },
-  { $sort: { '_id.year': -1, '_id.month': -1 } },
+  { $sort: { "_id.year": -1, "_id.month": -1 } },
   { $limit: 6 },
 ]);
 ```
@@ -5371,12 +4736,12 @@ So, monthlyApplications will be an array with up to 6 elements, each representin
 pages/Stats.jsx
 
 ```js
-import { ChartsContainer, StatsContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useLoaderData } from 'react-router-dom';
+import { ChartsContainer, StatsContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useLoaderData } from "react-router-dom";
 export const loader = async () => {
   try {
-    const response = await customFetch.get('/jobs/stats');
+    const response = await customFetch.get("/jobs/stats");
     return response.data;
   } catch (error) {
     return error;
@@ -5400,31 +4765,31 @@ export default Stats;
 #### Stats Container
 
 ```js
-import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa';
-import Wrapper from '../assets/wrappers/StatsContainer';
-import StatItem from './StatItem';
+import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from "react-icons/fa";
+import Wrapper from "../assets/wrappers/StatsContainer";
+import StatItem from "./StatItem";
 const StatsContainer = ({ defaultStats }) => {
   const stats = [
     {
-      title: 'pending applications',
+      title: "pending applications",
       count: defaultStats?.pending || 0,
       icon: <FaSuitcaseRolling />,
-      color: '#f59e0b',
-      bcg: '#fef3c7',
+      color: "#f59e0b",
+      bcg: "#fef3c7",
     },
     {
-      title: 'interviews scheduled',
+      title: "interviews scheduled",
       count: defaultStats?.interview || 0,
       icon: <FaCalendarCheck />,
-      color: '#647acb',
-      bcg: '#e0e8f9',
+      color: "#647acb",
+      bcg: "#e0e8f9",
     },
     {
-      title: 'jobs declined',
+      title: "jobs declined",
       count: defaultStats?.declined || 0,
       icon: <FaBug />,
-      color: '#d66a6a',
-      bcg: '#ffeeee',
+      color: "#d66a6a",
+      bcg: "#ffeeee",
     },
   ];
   return (
@@ -5441,11 +4806,11 @@ export default StatsContainer;
 #### ChartsContainer
 
 ```js
-import { useState } from 'react';
+import { useState } from "react";
 
-import BarChart from './BarChart';
-import AreaChart from './AreaChart';
-import Wrapper from '../assets/wrappers/ChartsContainer';
+import BarChart from "./BarChart";
+import AreaChart from "./AreaChart";
+import Wrapper from "../assets/wrappers/ChartsContainer";
 
 const ChartsContainer = ({ data }) => {
   const [barChart, setBarChart] = useState(true);
@@ -5453,8 +4818,8 @@ const ChartsContainer = ({ data }) => {
   return (
     <Wrapper>
       <h4>Monthly Applications</h4>
-      <button type='button' onClick={() => setBarChart(!barChart)}>
-        {barChart ? 'Area Chart' : 'Bar Chart'}
+      <button type="button" onClick={() => setBarChart(!barChart)}>
+        {barChart ? "Area Chart" : "Bar Chart"}
       </button>
       {barChart ? <BarChart data={data} /> : <AreaChart data={data} />}
     </Wrapper>
@@ -5485,17 +4850,17 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-} from 'recharts';
+} from "recharts";
 
 const AreaChartComponent = ({ data }) => {
   return (
-    <ResponsiveContainer width='100%' height={300}>
+    <ResponsiveContainer width="100%" height={300}>
       <AreaChart data={data} margin={{ top: 50 }}>
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='date' />
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
         <YAxis allowDecimals={false} />
         <Tooltip />
-        <Area type='monotone' dataKey='count' stroke='#2cb1bc' fill='#bef8fd' />
+        <Area type="monotone" dataKey="count" stroke="#2cb1bc" fill="#bef8fd" />
       </AreaChart>
     </ResponsiveContainer>
   );
@@ -5515,17 +4880,17 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const BarChartComponent = ({ data }) => {
   return (
-    <ResponsiveContainer width='100%' height={300}>
+    <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data} margin={{ top: 50 }}>
-        <CartesianGrid strokeDasharray='3 3 ' />
-        <XAxis dataKey='date' />
+        <CartesianGrid strokeDasharray="3 3 " />
+        <XAxis dataKey="date" />
         <YAxis allowDecimals={false} />
         <Tooltip />
-        <Bar dataKey='count' fill='#2cb1bc' barSize={75} />
+        <Bar dataKey="count" fill="#2cb1bc" barSize={75} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -5539,7 +4904,7 @@ export default BarChartComponent;
 wrappers/ChartsContainer.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   margin-top: 4rem;
@@ -5577,22 +4942,22 @@ export const getAllJobs = async (req, res) => {
 
   if (search) {
     queryObject.$or = [
-      { position: { $regex: search, $options: 'i' } },
-      { company: { $regex: search, $options: 'i' } },
+      { position: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } },
     ];
   }
-  if (jobStatus && jobStatus !== 'all') {
+  if (jobStatus && jobStatus !== "all") {
     queryObject.jobStatus = jobStatus;
   }
-  if (jobType && jobType !== 'all') {
+  if (jobType && jobType !== "all") {
     queryObject.jobType = jobType;
   }
 
   const sortOptions = {
-    newest: '-createdAt',
-    oldest: 'createdAt',
-    'a-z': 'position',
-    'z-a': '-position',
+    newest: "-createdAt",
+    oldest: "createdAt",
+    "a-z": "position",
+    "z-a": "-position",
   };
 
   const sortKey = sortOptions[sort] || sortOptions.newest;
@@ -5621,40 +4986,40 @@ export const getAllJobs = async (req, res) => {
 - setup log in AllJobs loader
 
 ```js
-import { FormRow, FormRowSelect, SubmitBtn } from '.';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { Form, useSubmit, Link } from 'react-router-dom';
-import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from '../../../utils/constants';
-import { useAllJobsContext } from '../pages/AllJobs';
+import { FormRow, FormRowSelect, SubmitBtn } from ".";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { Form, useSubmit, Link } from "react-router-dom";
+import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from "../../../utils/constants";
+import { useAllJobsContext } from "../pages/AllJobs";
 
 const SearchContainer = () => {
   return (
     <Wrapper>
-      <Form className='form'>
-        <h5 className='form-title'>search form</h5>
-        <div className='form-center'>
+      <Form className="form">
+        <h5 className="form-title">search form</h5>
+        <div className="form-center">
           {/* search position */}
 
-          <FormRow type='search' name='search' defaultValue='a' />
+          <FormRow type="search" name="search" defaultValue="a" />
           <FormRowSelect
-            labelText='job status'
-            name='jobStatus'
-            list={['all', ...Object.values(JOB_STATUS)]}
-            defaultValue='all'
+            labelText="job status"
+            name="jobStatus"
+            list={["all", ...Object.values(JOB_STATUS)]}
+            defaultValue="all"
           />
           <FormRowSelect
-            labelText='job type'
-            name='jobType'
-            list={['all', ...Object.values(JOB_TYPE)]}
-            defaultValue='all'
+            labelText="job type"
+            name="jobType"
+            list={["all", ...Object.values(JOB_TYPE)]}
+            defaultValue="all"
           />
           <FormRowSelect
-            name='sort'
-            defaultValue='newest'
+            name="sort"
+            defaultValue="newest"
             list={[...Object.values(JOB_SORT_BY)]}
           />
 
-          <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>
+          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
             Reset Search Values
           </Link>
           {/* TEMP!!!! */}
@@ -5673,11 +5038,11 @@ export default SearchContainer;
 AllJobs.jsx
 
 ```js
-import { toast } from 'react-toastify';
-import { JobsContainer, SearchContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useLoaderData } from 'react-router-dom';
-import { useContext, createContext } from 'react';
+import { toast } from "react-toastify";
+import { JobsContainer, SearchContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useLoaderData } from "react-router-dom";
+import { useContext, createContext } from "react";
 const AllJobsContext = createContext();
 export const loader = async ({ request }) => {
   try {
@@ -5685,7 +5050,7 @@ export const loader = async ({ request }) => {
       ...new URL(request.url).searchParams.entries(),
     ]);
 
-    const { data } = await customFetch.get('/jobs', {
+    const { data } = await customFetch.get("/jobs", {
       params,
     });
 
@@ -5741,11 +5106,11 @@ Putting it all together, the code retrieves the URL from the request.url propert
 SearchContainer.js
 
 ```js
-import { FormRow, FormRowSelect } from '.';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { Form, useSubmit, Link } from 'react-router-dom';
-import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from '../../../utils/constants';
-import { useAllJobsContext } from '../pages/AllJobs';
+import { FormRow, FormRowSelect } from ".";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { Form, useSubmit, Link } from "react-router-dom";
+import { JOB_TYPE, JOB_STATUS, JOB_SORT_BY } from "../../../utils/constants";
+import { useAllJobsContext } from "../pages/AllJobs";
 const SearchContainer = () => {
   const { searchValues } = useAllJobsContext();
   const { search, jobStatus, jobType, sort } = searchValues;
@@ -5754,46 +5119,46 @@ const SearchContainer = () => {
 
   return (
     <Wrapper>
-      <Form className='form'>
-        <h5 className='form-title'>search form</h5>
-        <div className='form-center'>
+      <Form className="form">
+        <h5 className="form-title">search form</h5>
+        <div className="form-center">
           {/* search position */}
 
           <FormRow
-            type='search'
-            name='search'
+            type="search"
+            name="search"
             defaultValue={search}
             onChange={(e) => {
               submit(e.currentTarget.form);
             }}
           />
           <FormRowSelect
-            labelText='job status'
-            name='jobStatus'
-            list={['all', ...Object.values(JOB_STATUS)]}
+            labelText="job status"
+            name="jobStatus"
+            list={["all", ...Object.values(JOB_STATUS)]}
             defaultValue={jobStatus}
             onChange={(e) => {
               submit(e.currentTarget.form);
             }}
           />
           <FormRowSelect
-            labelText='job type'
-            name='jobType'
+            labelText="job type"
+            name="jobType"
             defaultValue={jobType}
-            list={['all', ...Object.values(JOB_TYPE)]}
+            list={["all", ...Object.values(JOB_TYPE)]}
             onChange={(e) => {
               submit(e.currentTarget.form);
             }}
           />
           <FormRowSelect
-            name='sort'
+            name="sort"
             defaultValue={sort}
             list={[...Object.values(JOB_SORT_BY)]}
             onChange={(e) => {
               submit(e.currentTarget.form);
             }}
           />
-          <Link to='/dashboard/all-jobs' className='btn form-btn delete-btn'>
+          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
             Reset Search Values
           </Link>
         </div>
@@ -5823,8 +5188,8 @@ const debounce = (onChange) => {
   };
 };
 <FormRow
-  type='search'
-  name='search'
+  type="search"
+  name="search"
   defaultValue={search}
   onChange={debounce((form) => {
     submit(form);
@@ -5839,10 +5204,10 @@ const debounce = (onChange) => {
 JobsContainer.jsx
 
 ```js
-import Job from './Job';
-import Wrapper from '../assets/wrappers/JobsContainer';
-import PageBtnContainer from './PageBtnContainer';
-import { useAllJobsContext } from '../pages/AllJobs';
+import Job from "./Job";
+import Wrapper from "../assets/wrappers/JobsContainer";
+import PageBtnContainer from "./PageBtnContainer";
+import { useAllJobsContext } from "../pages/AllJobs";
 
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
@@ -5858,9 +5223,9 @@ const JobsContainer = () => {
   return (
     <Wrapper>
       <h5>
-        {totalJobs} job{jobs.length > 1 && 's'} found
+        {totalJobs} job{jobs.length > 1 && "s"} found
       </h5>
-      <div className='jobs'>
+      <div className="jobs">
         {jobs.map((job) => {
           return <Job key={job._id} {...job} />;
         })}
@@ -5876,10 +5241,10 @@ export default JobsContainer;
 #### Basic PageBtnContainer
 
 ```js
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
-import Wrapper from '../assets/wrappers/PageBtnContainer';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { useAllJobsContext } from '../pages/AllJobs';
+import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import Wrapper from "../assets/wrappers/PageBtnContainer";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useAllJobsContext } from "../pages/AllJobs";
 
 const PageBtnContainer = () => {
   const {
@@ -5891,14 +5256,14 @@ const PageBtnContainer = () => {
 
   const handlePageChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);
-    searchParams.set('page', pageNumber);
+    searchParams.set("page", pageNumber);
     navigate(`${pathname}?${searchParams.toString()}`);
   };
 
   return (
     <Wrapper>
       <button
-        className='btn prev-btn'
+        className="btn prev-btn"
         onClick={() => {
           let prevPage = currentPage - 1;
           if (prevPage < 1) prevPage = numOfPages;
@@ -5908,10 +5273,10 @@ const PageBtnContainer = () => {
         <HiChevronDoubleLeft />
         prev
       </button>
-      <div className='btn-container'>
+      <div className="btn-container">
         {pages.map((pageNumber) => (
           <button
-            className={`btn page-btn ${pageNumber === currentPage && 'active'}`}
+            className={`btn page-btn ${pageNumber === currentPage && "active"}`}
             key={pageNumber}
             onClick={() => handlePageChange(pageNumber)}
           >
@@ -5920,7 +5285,7 @@ const PageBtnContainer = () => {
         ))}
       </div>
       <button
-        className='btn next-btn'
+        className="btn next-btn"
         onClick={() => {
           let nextPage = currentPage + 1;
           if (nextPage > numOfPages) nextPage = 1;
@@ -5940,10 +5305,10 @@ export default PageBtnContainer;
 #### Complex - PageBtnContainer
 
 ```js
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
-import Wrapper from '../assets/wrappers/PageBtnContainer';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { useAllJobsContext } from '../pages/AllJobs';
+import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import Wrapper from "../assets/wrappers/PageBtnContainer";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useAllJobsContext } from "../pages/AllJobs";
 
 const PageBtnContainer = () => {
   const {
@@ -5954,14 +5319,14 @@ const PageBtnContainer = () => {
 
   const handlePageChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);
-    searchParams.set('page', pageNumber);
+    searchParams.set("page", pageNumber);
     navigate(`${pathname}?${searchParams.toString()}`);
   };
 
   const addPageButton = ({ pageNumber, activeClass }) => {
     return (
       <button
-        className={`btn page-btn ${activeClass && 'active'}`}
+        className={`btn page-btn ${activeClass && "active"}`}
         key={pageNumber}
         onClick={() => handlePageChange(pageNumber)}
       >
@@ -5980,7 +5345,7 @@ const PageBtnContainer = () => {
     // Add the dots before the current page if there are more than 3 pages
     if (currentPage > 3) {
       pageButtons.push(
-        <span className='page-btn dots' key='dots-1'>
+        <span className="page-btn dots" key="dots-1">
           ....
         </span>
       );
@@ -6007,7 +5372,7 @@ const PageBtnContainer = () => {
     }
     if (currentPage < numOfPages - 2) {
       pageButtons.push(
-        <span className=' page-btn dots' key='dots+1'>
+        <span className=" page-btn dots" key="dots+1">
           ....
         </span>
       );
@@ -6027,7 +5392,7 @@ const PageBtnContainer = () => {
   return (
     <Wrapper>
       <button
-        className='prev-btn'
+        className="prev-btn"
         onClick={() => {
           let prevPage = currentPage - 1;
           if (prevPage < 1) prevPage = numOfPages;
@@ -6037,9 +5402,9 @@ const PageBtnContainer = () => {
         <HiChevronDoubleLeft />
         prev
       </button>
-      <div className='btn-container'>{renderPageButtons()}</div>
+      <div className="btn-container">{renderPageButtons()}</div>
       <button
-        className='btn next-btn'
+        className="btn next-btn"
         onClick={() => {
           let nextPage = currentPage + 1;
           if (nextPage > numOfPages) nextPage = 1;
@@ -6061,7 +5426,7 @@ export default PageBtnContainer;
 wrappers/PageBtnContainer.js
 
 ```js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   height: 6rem;
@@ -6139,8 +5504,8 @@ cd client && npm run build
 - in server.js point to index.html
 
 ```js
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public", "index.html"));
 });
 ```
 
@@ -6167,10 +5532,10 @@ package.json
 server.js
 
 ```js
-app.use(express.static(path.resolve(__dirname, './client/dist')));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 });
 ```
 
@@ -6201,9 +5566,9 @@ npm i datauri@4.1.0
 middleware/multerMiddleware.js
 
 ```js
-import multer from 'multer';
-import DataParser from 'datauri/parser.js';
-import path from 'path';
+import multer from "multer";
+import DataParser from "datauri/parser.js";
+import path from "path";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -6221,7 +5586,7 @@ export default upload;
 controller/userController.js
 
 ```js
-import { formatImage } from '../middleware/multerMiddleware.js';
+import { formatImage } from "../middleware/multerMiddleware.js";
 
 export const updateUser = async (req, res) => {
   const newUser = { ...req.body };
@@ -6237,7 +5602,7 @@ export const updateUser = async (req, res) => {
   if (req.file && updatedUser.avatarPublicId) {
     await cloudinary.v2.uploader.destroy(updatedUser.avatarPublicId);
   }
-  res.status(StatusCodes.OK).json({ msg: 'update user' });
+  res.status(StatusCodes.OK).json({ msg: "update user" });
 };
 ```
 
@@ -6250,7 +5615,7 @@ components/Loading.jsx
 
 ```js
 const Loading = () => {
-  return <div className='loading'></div>;
+  return <div className="loading"></div>;
 };
 
 export default Loading;
@@ -6259,17 +5624,17 @@ export default Loading;
 DashboardLayout.jsx
 
 ```js
-import { useNavigation } from 'react-router-dom';
-import { Loading } from '../components';
+import { useNavigation } from "react-router-dom";
+import { Loading } from "../components";
 
 const DashboardLayout = ({ isDarkThemeEnabled }) => {
   const navigation = useNavigation();
-  const isPageLoading = navigation.state === 'loading';
+  const isPageLoading = navigation.state === "loading";
 
   return (
     <Wrapper>
       ...
-      <div className='dashboard-page'>
+      <div className="dashboard-page">
         {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
       </div>
       ...
@@ -6293,8 +5658,8 @@ npm i @tanstack/react-query@4.29.5 @tanstack/react-query-devtools@4.29.6
 App.jsx
 
 ```js
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -6319,7 +5684,7 @@ const App = () => {
 - create components/ErrorElement
 
 ```js
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from "react-router-dom";
 
 const Error = () => {
   const error = useRouteError();
@@ -6333,7 +5698,7 @@ Stats.jsx
 
 ```js
 export const loader = async () => {
-  const response = await customFetch.get('/jobs/stats');
+  const response = await customFetch.get("/jobs/stats");
   return response.data;
 };
 ```
@@ -6365,10 +5730,10 @@ App.jsx
 Stats.jsx
 
 ```js
-import { ChartsContainer, StatsContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useLoaderData } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { ChartsContainer, StatsContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useLoaderData } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export const loader = async () => {
   return null;
@@ -6376,8 +5741,8 @@ export const loader = async () => {
 
 const Stats = () => {
   const response = useQuery({
-    queryKey: ['stats'],
-    queryFn: () => customFetch.get('/jobs/stats'),
+    queryKey: ["stats"],
+    queryFn: () => customFetch.get("/jobs/stats"),
   });
   console.log(response);
   if (response.isLoading) {
@@ -6398,8 +5763,8 @@ export default Stats;
 
 ```js
 const data = useQuery({
-  queryKey: ['stats'],
-  queryFn: () => customFetch.get('/jobs/stats'),
+  queryKey: ["stats"],
+  queryFn: () => customFetch.get("/jobs/stats"),
 });
 ```
 
@@ -6415,9 +5780,9 @@ customFetch.get('/jobs/stats'): This line is making an HTTP GET request to the /
 
 ```js
 const statsQuery = {
-  queryKey: ['stats'],
+  queryKey: ["stats"],
   queryFn: async () => {
-    const response = await customFetch.get('/jobs/stats');
+    const response = await customFetch.get("/jobs/stats");
     return response.data;
   },
 };
@@ -6462,14 +5827,14 @@ App.jsx
 Stats.jsx
 
 ```js
-import { ChartsContainer, StatsContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useQuery } from '@tanstack/react-query';
+import { ChartsContainer, StatsContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useQuery } from "@tanstack/react-query";
 
 const statsQuery = {
-  queryKey: ['stats'],
+  queryKey: ["stats"],
   queryFn: async () => {
-    const response = await customFetch.get('/jobs/statss');
+    const response = await customFetch.get("/jobs/statss");
     return response.data;
   },
 };
@@ -6501,9 +5866,9 @@ DashboardLayout.jsx
 
 ```js
 const userQuery = {
-  queryKey: ['user'],
+  queryKey: ["user"],
   queryFn: async () => {
-    const { data } = await customFetch('/users/current-user');
+    const { data } = await customFetch("/users/current-user");
     return data;
   },
 };
@@ -6512,7 +5877,7 @@ export const loader = (queryClient) => async () => {
   try {
     return await queryClient.ensureQueryData(userQuery);
   } catch (error) {
-    return redirect('/');
+    return redirect("/");
   }
 };
 
@@ -6532,10 +5897,10 @@ export const action =
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     try {
-      await axios.post('/api/v1/auth/login', data);
+      await axios.post("/api/v1/auth/login", data);
       queryClient.invalidateQueries();
-      toast.success('Login successful');
-      return redirect('/dashboard');
+      toast.success("Login successful");
+      return redirect("/dashboard");
     } catch (error) {
       toast.error(error.response.data.msg);
       return error;
@@ -6547,10 +5912,10 @@ DashboardLayout.jsx
 
 ```js
 const logoutUser = async () => {
-  navigate('/');
-  await customFetch.get('/auth/logout');
+  navigate("/");
+  await customFetch.get("/auth/logout");
   queryClient.invalidateQueries();
-  toast.success('Logging out...');
+  toast.success("Logging out...");
 };
 ```
 
@@ -6561,16 +5926,16 @@ export const action =
   (queryClient) =>
   async ({ request }) => {
     const formData = await request.formData();
-    const file = formData.get('avatar');
+    const file = formData.get("avatar");
     if (file && file.size > 500000) {
-      toast.error('Image size too large');
+      toast.error("Image size too large");
       return null;
     }
     try {
-      await customFetch.patch('/users/update-user', formData);
-      queryClient.invalidateQueries(['user']);
-      toast.success('Profile updated successfully');
-      return redirect('/dashboard');
+      await customFetch.patch("/users/update-user", formData);
+      queryClient.invalidateQueries(["user"]);
+      toast.success("Profile updated successfully");
+      return redirect("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
       return null;
@@ -6583,27 +5948,27 @@ export const action =
 AllJobs.jsx
 
 ```js
-import { toast } from 'react-toastify';
-import { JobsContainer, SearchContainer } from '../components';
-import customFetch from '../utils/customFetch';
-import { useLoaderData } from 'react-router-dom';
-import { useContext, createContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { toast } from "react-toastify";
+import { JobsContainer, SearchContainer } from "../components";
+import customFetch from "../utils/customFetch";
+import { useLoaderData } from "react-router-dom";
+import { useContext, createContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 const AllJobsContext = createContext();
 
 const allJobsQuery = (params) => {
   const { search, jobStatus, jobType, sort, page } = params;
   return {
     queryKey: [
-      'jobs',
-      search ?? '',
-      jobStatus ?? 'all',
-      jobType ?? 'all',
-      sort ?? 'newest',
+      "jobs",
+      search ?? "",
+      jobStatus ?? "all",
+      jobType ?? "all",
+      sort ?? "newest",
       page ?? 1,
     ],
     queryFn: async () => {
-      const { data } = await customFetch.get('/jobs', {
+      const { data } = await customFetch.get("/jobs", {
         params,
       });
       return data;
@@ -6648,10 +6013,10 @@ export const action =
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     try {
-      await customFetch.post('/jobs', data);
-      queryClient.invalidateQueries(['jobs']);
-      toast.success('Job added successfully ');
-      return redirect('all-jobs');
+      await customFetch.post("/jobs", data);
+      queryClient.invalidateQueries(["jobs"]);
+      toast.success("Job added successfully ");
+      return redirect("all-jobs");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
       return error;
@@ -6669,9 +6034,9 @@ export const action =
     const data = Object.fromEntries(formData);
     try {
       await customFetch.patch(`/jobs/${params.id}`, data);
-      queryClient.invalidateQueries(['jobs']);
-      toast.success('Job edited successfully');
-      return redirect('/dashboard/all-jobs');
+      queryClient.invalidateQueries(["jobs"]);
+      toast.success("Job edited successfully");
+      return redirect("/dashboard/all-jobs");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
       return error;
@@ -6687,30 +6052,30 @@ export const action =
   async ({ params }) => {
     try {
       await customFetch.delete(`/jobs/${params.id}`);
-      queryClient.invalidateQueries(['jobs']);
-      toast.success('Job deleted successfully');
+      queryClient.invalidateQueries(["jobs"]);
+      toast.success("Job deleted successfully");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
     }
-    return redirect('/dashboard/all-jobs');
+    return redirect("/dashboard/all-jobs");
   };
 ```
 
 #### Edit Job Loader
 
 ```js
-import { FormRow, FormRowSelect, SubmitBtn } from '../components';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useLoaderData, useParams } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
-import { Form, redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import customFetch from '../utils/customFetch';
-import { useQuery } from '@tanstack/react-query';
+import { FormRow, FormRowSelect, SubmitBtn } from "../components";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
+import { useLoaderData, useParams } from "react-router-dom";
+import { JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
+import { Form, redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import customFetch from "../utils/customFetch";
+import { useQuery } from "@tanstack/react-query";
 
 const singleJobQuery = (id) => {
   return {
-    queryKey: ['job', id],
+    queryKey: ["job", id],
     queryFn: async () => {
       const { data } = await customFetch.get(`/jobs/${id}`);
       return data;
@@ -6726,7 +6091,7 @@ export const loader =
       return params.id;
     } catch (error) {
       toast.error(error?.response?.data?.msg);
-      return redirect('/dashboard/all-jobs');
+      return redirect("/dashboard/all-jobs");
     }
   };
 
@@ -6737,10 +6102,10 @@ export const action =
     const data = Object.fromEntries(formData);
     try {
       await customFetch.patch(`/jobs/${params.id}`, data);
-      queryClient.invalidateQueries(['jobs']);
+      queryClient.invalidateQueries(["jobs"]);
 
-      toast.success('Job edited successfully');
-      return redirect('/dashboard/all-jobs');
+      toast.success("Job edited successfully");
+      return redirect("/dashboard/all-jobs");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
       return error;
@@ -6756,26 +6121,26 @@ const EditJob = () => {
 
   return (
     <Wrapper>
-      <Form method='post' className='form'>
-        <h4 className='form-title'>edit job</h4>
-        <div className='form-center'>
-          <FormRow type='text' name='position' defaultValue={job.position} />
-          <FormRow type='text' name='company' defaultValue={job.company} />
+      <Form method="post" className="form">
+        <h4 className="form-title">edit job</h4>
+        <div className="form-center">
+          <FormRow type="text" name="position" defaultValue={job.position} />
+          <FormRow type="text" name="company" defaultValue={job.company} />
           <FormRow
-            type='text'
-            name='jobLocation'
-            labelText='job location'
+            type="text"
+            name="jobLocation"
+            labelText="job location"
             defaultValue={job.jobLocation}
           />
           <FormRowSelect
-            name='jobStatus'
-            labelText='job status'
+            name="jobStatus"
+            labelText="job status"
             defaultValue={job.jobStatus}
             list={Object.values(JOB_STATUS)}
           />
           <FormRowSelect
-            name='jobType'
-            labelText='job type'
+            name="jobType"
+            labelText="job type"
             defaultValue={job.jobType}
             list={Object.values(JOB_TYPE)}
           />
@@ -6848,8 +6213,8 @@ Need: This package is necessary to manage and regulate the number of requests ma
 server.js
 
 ```js
-import helmet from 'helmet';
-import mongoSanitize from 'express-mongo-sanitize';
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 app.use(helmet());
 app.use(mongoSanitize());
@@ -6858,13 +6223,13 @@ app.use(mongoSanitize());
 routes/authRouter.js
 
 ```js
-import rateLimiter from 'express-rate-limit';
+import rateLimiter from "express-rate-limit";
 
 const apiLimiter = rateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 15,
-  message: { msg: 'IP rate limit exceeded, retry in 15 minutes.' },
+  message: { msg: "IP rate limit exceeded, retry in 15 minutes." },
 });
-router.post('/register', apiLimiter, validateRegisterInput, register);
-router.post('/login', apiLimiter, validateLoginInput, login);
+router.post("/register", apiLimiter, validateRegisterInput, register);
+router.post("/login", apiLimiter, validateLoginInput, login);
 ```
