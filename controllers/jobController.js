@@ -4,14 +4,10 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "./../errors/customErrors.js";
 
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find();
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    results: jobs.length,
-    data: {
-      jobs,
-    },
-  });
+  console.log(req.user);
+  const jobs = await Job.find({ createdBy: req.user.userId });
+  // const jobs = await Job.find();
+  res.status(StatusCodes.OK).json({ jobs });
 };
 
 export const getJob = async (req, res) => {
@@ -25,13 +21,9 @@ export const getJob = async (req, res) => {
 };
 
 export const createJob = async (req, res) => {
-  const newJob = await Job.create(req.body);
-  res.status(StatusCodes.CREATED).json({
-    status: "success",
-    data: {
-      newJob,
-    },
-  });
+  req.body.createdBy = req.user.userId;
+  const job = await Job.create(req.body);
+  res.status(StatusCodes.CREATED).json({ job });
 };
 
 export const updateJob = async (req, res) => {
@@ -40,12 +32,7 @@ export const updateJob = async (req, res) => {
     runValidators: true,
   });
 
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    data: {
-      updatedJob,
-    },
-  });
+  res.status(StatusCodes.OK).json({ updatedJob });
 };
 
 export const deleteJob = catchAsync(async (req, res) => {

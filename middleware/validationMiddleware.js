@@ -1,6 +1,10 @@
 import { body, param, validationResult } from "express-validator";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
-import { NotFoundError, BadRequestError } from "../errors/customErrors.js";
+import {
+  NotFoundError,
+  BadRequestError,
+  UnauthorizedError,
+} from "../errors/customErrors.js";
 import mongoose from "mongoose";
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
@@ -15,6 +19,11 @@ const withValidationErrors = (validateValues) => {
         if (errorMessages[0].startsWith("no job")) {
           throw new NotFoundError(errorMessages);
         }
+
+        if (errorMessages[0].startsWith("not authorized")) {
+          throw new UnauthorizedError("not authorized to access this route");
+        }
+
         throw new BadRequestError(errorMessages);
       }
       next();
@@ -65,10 +74,31 @@ export const validateLoginInput = withValidationErrors([
 ]);
 
 export const validateIdParam = withValidationErrors([
-  param("id").custom(async (value) => {
+  param("id").custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new BadRequestError("invalid MongoDB id");
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
+    const isAdmin = req.user.role === "admin";
+    const isOwner = req.user.userId === job.createdBy.toString();
+    if (!isAdmin && !isOwner)
+      throw new UnauthorizedError("not authorized to access this route");
   }),
+]);
+
+export const validateUpdateUserInput = withValidationErrors([
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("invalid email format")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email });
+      if (user && user._id.toString() !== req.user.userId) {
+        throw new Error("email already exists");
+      }
+    }),
+  body("lastName").notEmpty().withMessage("last name is required"),
+  body("location").notEmpty().withMessage("location is required"),
 ]);
