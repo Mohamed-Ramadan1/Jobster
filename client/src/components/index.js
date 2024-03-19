@@ -9,3 +9,5 @@ export { default as ThemeToggle } from "./ThemeToggle";
 export { default as FormRowSelect } from "./FormRowSelect";
 export { default as JobsContainer } from "./JobsContainer";
 export { default as SearchContainer } from "./SearchContainer";
+export { default as StatItem } from "./StatItem";
+export { default as SubmitBtn } from "./SubmitBtn";
